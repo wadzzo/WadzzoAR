@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Splash.unity
+    guid: 74602a8e006a348cc8583b2a2c6877dc
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 4f82e7032116a4656b24ee3346603c74
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 62099044d8ab74edfb602e349511ca00
+  - enabled: 1
+    path: Assets/Scenes/ARLocationPlaceAtLocations.unity
+    guid: 467ac48e75b55cb4dbf6e9885ad5aafa
+  - enabled: 1
+    path: Assets/Scenes/Scene_/DEXIScene/SpwanFeatherPlane.unity
+    guid: 250a9dde4907d46a883eb22d06209681
+  - enabled: 0
+    path: Assets/Scenes/Scene_/OldScenes/Menu.unity
+    guid: 1a925f6334ae1438191aac620dab8329
+  - enabled: 0
+    path: Assets/Scenes/Scene_/OldScenes/MapScene.unity
+    guid: 2a09a9ff2b49633468988ad79882287d
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: cba70b5ed540e8547bf16c2a37cb99f2, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 1879ae8b6c891384fbe24f9bac522ee9, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 18e2dc0f583f0174a9b0c3183a099e46, type: 2}

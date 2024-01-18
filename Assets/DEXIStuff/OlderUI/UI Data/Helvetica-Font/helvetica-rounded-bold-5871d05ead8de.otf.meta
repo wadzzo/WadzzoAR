@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 41488d0dc271d43e59b4b3aca29d88f3
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Helvetica Rounded
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 99d101ddf945da948bf5d50094e9ff3a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
