@@ -28,7 +28,7 @@ public class UsersFromLocation : MonoBehaviour
         {
             instance = this;
         }
-       // SwitchMode.LocationShowMode = "follow_mode";
+        // SwitchMode.LocationShowMode = "follow_mode";
     }
 
     void Start()
@@ -52,10 +52,10 @@ public class UsersFromLocation : MonoBehaviour
     public void GetUserByLocations()
     {
         Debug.Log("Always call this API");
-      LoadingManager.instance.loading.SetActive(true);
+        LoadingManager.instance.loading.SetActive(true);
         //StartCoroutine(GetLocations());
         StartCoroutine(GetLocationsNew());
-      //implement new coroutine call here
+        //implement new coroutine call here
     }
 
     public void CalculateRange()
@@ -73,13 +73,14 @@ public class UsersFromLocation : MonoBehaviour
         string updatedRequestName = "api/v1/locations?mode=" + PlayerPrefsHandler.Mode + "&lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
         //Old_once
         //string updatedRequestName = "/api/v1/locations?mode="+PlayerPrefsHandler.Mode+"?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-#if (UNITY_EDITOR)
-        updatedRequestName = "api/v1/locations?mode="+ PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
-#endif
+        #if (UNITY_EDITOR)
+                updatedRequestName = "api/game/locations"; //?mode="+ PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
+        #endif
         //updatedRequestName = "http://sdev.wadzzo.com/api/v1/locations?mode=" + PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
-        using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL+updatedRequestName))
+        using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + updatedRequestName))
         {
-            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            www.SetRequestHeader("Cookie", AuthManager.Token);
             yield return www.SendWebRequest();
 
             //AllLocations Result = JsonUtility.FromJson<AllLocations>(www.downloadHandler.text);
@@ -87,7 +88,7 @@ public class UsersFromLocation : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 ConsoleManager.instance.ShowMessage("hhhhNetwork Error!");
-                Debug.Log("map "+www.error);
+                Debug.Log("map " + www.error);
                 PlayerPrefs.DeleteAll();
                 SceneManager.LoadScene("Login");
 
@@ -111,10 +112,10 @@ public class UsersFromLocation : MonoBehaviour
 
     IEnumerator GetLocations()
     {
-        string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng="+ Input.location.lastData.longitude.ToString();
-        #if (UNITY_EDITOR)
+        string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
+#if (UNITY_EDITOR)
             requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
-        #endif
+#endif
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + requestName))
         {
             www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
@@ -124,7 +125,7 @@ public class UsersFromLocation : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                ConsoleManager.instance.ShowMessage("Network Error!");  
+                ConsoleManager.instance.ShowMessage("Network Error!");
                 Debug.Log(www.error);
                 PlayerPrefs.DeleteAll();
                 SceneManager.LoadScene("Login");
@@ -138,7 +139,7 @@ public class UsersFromLocation : MonoBehaviour
                 //{
                 //    Debug.Log("hehehhehehe " + item.collection_limit_remaining);
                 //}
-                Debug.Log("Locations "+www.downloadHandler.text);
+                Debug.Log("Locations " + www.downloadHandler.text);
                 LoadingManager.instance.loading.SetActive(false);
                 ConsoleManager.instance.ShowMessage("Location Found!");
 

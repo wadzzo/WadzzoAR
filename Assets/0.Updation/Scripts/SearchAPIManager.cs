@@ -18,7 +18,7 @@ public class SearchAPIManager : MonoBehaviour
     private RectTransform content_area;
     private List<GameObject> userData = new List<GameObject>();
     private List<string> brandNames = new List<string>();
-    private List<int> BrandIds = new List<int>();
+    private List<string> BrandIds = new List<string>();
     private List<bool> followedByUser = new List<bool>();
     private float sizeToAdd=190f;
 

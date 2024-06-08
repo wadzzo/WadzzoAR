@@ -9,7 +9,7 @@ public class DataHolder : MonoBehaviour
     public Button followButton;
     public Button unfollowButton;
     public Text brandName;
-    public int brandID;
+    public string brandID;
     public bool SearchList;
     private void Awake()
     {
@@ -102,24 +102,25 @@ public class DataHolder : MonoBehaviour
 
     //follow API manager
     private string BaseURL = AuthManager.BASE_URL;
-    public const string requestName = "api/v1/follows";
+    public const string requestName = "api/game/follow";
     private string tokken;
     private int brand_ID;
     private bool follow_message;
-    public void FollowBrand(int ID)
+    public void FollowBrand(string ID)
     {
         StartCoroutine(FollowCoroutine(ID));
         LoadingManager.instance.loading.SetActive(true);
     }
 
-    IEnumerator FollowCoroutine(int brand_ID)
+    IEnumerator FollowCoroutine(string brand_ID)
     {
         WWWForm form = new WWWForm();
         form.AddField("brand_id", brand_ID);
 
         using (UnityWebRequest www = UnityWebRequest.Post(AuthManager.BASE_URL + requestName, form))
         {
-            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            www.SetRequestHeader("Cookie", AuthManager.Token);
             yield return www.SendWebRequest();
             if (www.isHttpError)
             {
@@ -158,7 +159,7 @@ public class DataHolder : MonoBehaviour
     public const string request_Name = "api/v1/follows/:id?brand_id=";
     private string _tokken;
     private bool unfollow_message;
-    public void UnFollowBrand(int brandID)
+    public void UnFollowBrand(string brandID)
     {
         Debug.Log("unfollow request sent");
         string URL = AuthManager.BASE_URL + request_Name + brandID;

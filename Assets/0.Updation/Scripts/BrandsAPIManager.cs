@@ -14,7 +14,7 @@ public class BrandsAPIManager : MonoBehaviour
         }
     }
     private string BaseURL = AuthManager.BASE_URL;
-    public const string requestName = "api/v1/brands";
+    public const string requestName = "api/game/brands";
     private string tokken;
     [HideInInspector]
     public string brand_name,responseText;
@@ -60,9 +60,10 @@ public class BrandsAPIManager : MonoBehaviour
         UnityWebRequest connectionRequest = UnityWebRequest.Get(URL);
 
         connectionRequest.downloadHandler = new DownloadHandlerBuffer();
-        connectionRequest.SetRequestHeader("Content-Type", "application/json");
+        // connectionRequest.SetRequestHeader("Content-Type", "application/json");
 
-        connectionRequest.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+        // connectionRequest.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+        connectionRequest.SetRequestHeader("Cookie", AuthManager.Token);
         LoadingManager.instance.loading.SetActive(true);
         StartCoroutine(WaitForConnection(connectionRequest));
     }
