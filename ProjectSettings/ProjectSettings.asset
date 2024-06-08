@@ -802,7 +802,7 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Android: 
-    Standalone: '>- MOBILE_KEYBOARD_RAISER_ASSET_STORE_RELEASE;PUBLISHING_TOOLS_ASSET_STORE_RELEASE'
+    Standalone: 'MOBILE_KEYBOARD_RAISER_ASSET_STORE_RELEASE;PUBLISHING_TOOLS_ASSET_STORE_RELEASE'
     iPhone: UNITY_XR_ARKIT_LOADER_ENABLED
   additionalCompilerArguments: {}
   platformArchitecture: {}
