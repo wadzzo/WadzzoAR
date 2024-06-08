@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using System.Text;
 
 public class AuthManager : MonoBehaviour
 {
     public static AuthManager instance;
     public static DailyPointsRewardRoot root;
+    public static SessionUser user;
+
     string UserNameofUser;
 
     [Header("Panel")]
@@ -61,19 +65,19 @@ public class AuthManager : MonoBehaviour
         }
         get
         {
-            return PlayerPrefs.GetString("IsLogged","false");
+            return PlayerPrefs.GetString("IsLogged", "false");
         }
     }
 
-    public static int UserId
+    public static string UserId
     {
         set
         {
-            PlayerPrefs.SetInt("UserId", value);
+            PlayerPrefs.SetString("UserId", value);
         }
         get
         {
-            return PlayerPrefs.GetInt("UserId");
+            return PlayerPrefs.GetString("UserId");
         }
     }
 
@@ -126,16 +130,17 @@ public class AuthManager : MonoBehaviour
         {
             instance = this;
         }
-        if (IsLogged=="false")
+        if (IsLogged == "false")
         {
             Debug.Log("User is not logged in");
             coinAimation = true;
         }
     }
 
-    //public static string BASE_URL = "https://www.thebillboardapp.net/";
-    //public static string BASE_URL = "https://sdev.wadzzo.com/";
-    public static string BASE_URL = "https://admin.wadzzo.com/";
+    // public static string BASE_URL = "https://admin.action-token.com/";
+    public static string BASE_URL = "http://localhost:3000/";
+
+
 
     ///users/sign_in
     private void Start()
@@ -149,22 +154,22 @@ public class AuthManager : MonoBehaviour
     }
 
 
-    public void CreateUser(string name ,string email, string password,string username)
+    public void CreateUser(string name, string email, string password, string username)
     {
         Debug.Log("Creeating User");
-        StartCoroutine(PostCreateUserRequest(name,email,password,username));
+        StartCoroutine(PostCreateUserRequest(name, email, password, username));
     }
 
-    public void LoginUser(string email,string password)
+    public void LoginUser(string email, string password)
     {
         Debug.Log("Login User");
-        StartCoroutine(PostLoginUserRequest(email,password));
+        StartCoroutine(PostLoginUserRequest(email, password));
     }
 
     public void UpdateScore(int score)
     {
         Debug.Log(" Updating score");
-        StartCoroutine(PostUpdateScoreRequest(UserId.ToString(),score.ToString()));
+        StartCoroutine(PostUpdateScoreRequest(UserId.ToString(), score.ToString()));
     }
 
     public void GetScores()
@@ -189,18 +194,18 @@ public class AuthManager : MonoBehaviour
         StartCoroutine(PostConsumeLocation(MapItem.id));
     }
 
-    public  IEnumerator PostConsumeLocation(int id)
+    public IEnumerator PostConsumeLocation(int id)
     {
         WWWForm form = new WWWForm();
         form.AddField("id", id);
-    
+
         string requestName = "api/v1/locations/consume";
-    
+
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
-           
-            www.SetRequestHeader("Authorization", "Bearer "+ AuthManager.Token);
-          
+
+            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+
             yield return www.SendWebRequest();
             ConsumeLocation Result1 = JsonUtility.FromJson<ConsumeLocation>(www.downloadHandler.text);
 
@@ -209,29 +214,29 @@ public class AuthManager : MonoBehaviour
             {
 
                 Debug.Log(www.downloadHandler.text);
-                
+
             }
             else
             {
-           
+
 
                 //if (PlayerPrefs.GetString("CollectQuietly") == "no")
                 //    {
-              GameObject.Find("ConsumeLocationPopUp").GetComponent<ConsumeLocationPopUp>().SucessPopUpPanel.SetActive(true);
+                GameObject.Find("ConsumeLocationPopUp").GetComponent<ConsumeLocationPopUp>().SucessPopUpPanel.SetActive(true);
                 //     StartCoroutine(ReloadSceneForCollectingloudly());
                 //    }
                 //else if(PlayerPrefs.GetString("CollectQuietly") == "yes")
                 //{
-                    LocationDataManager.instance.users[LocationDataManager.instance.currentCollectiongIndex].collected = true;
-                    StartCoroutine(ReloadSceneForCollectQuietly());
+                LocationDataManager.instance.users[LocationDataManager.instance.currentCollectiongIndex].collected = true;
+                StartCoroutine(ReloadSceneForCollectQuietly());
 
                 //}
-                     Debug.Log("LocationConsumed ID "+id);
-                     Debug.Log("LocationConsumed "+www.downloadHandler.text);
+                Debug.Log("LocationConsumed ID " + id);
+                Debug.Log("LocationConsumed " + www.downloadHandler.text);
             }
         }
     }
-    IEnumerator PostCreateUserRequest(string name, string email, string password,string username)
+    IEnumerator PostCreateUserRequest(string name, string email, string password, string username)
     {
         WWWForm form = new WWWForm();
         form.AddField("email", email);
@@ -261,7 +266,7 @@ public class AuthManager : MonoBehaviour
                 }
                 else if (Result.sucess == true)
                 {
-                   // ConsoleManager.instance.ShowMessage("Verify your email address");
+                    // ConsoleManager.instance.ShowMessage("Verify your email address");
                     EmailConfirmationPanel.SetActive(true);
                     //SignInPanel.SetActive(true);
                     //SignUnPanel.SetActive(false);
@@ -277,7 +282,7 @@ public class AuthManager : MonoBehaviour
             else
             {
                 Debug.Log(www.downloadHandler.text);
-             
+
                 OnSuccess(www.downloadHandler.text);
             }
         }
@@ -296,7 +301,7 @@ public class AuthManager : MonoBehaviour
         form.AddField("email", email);
         form.AddField("social_id", social_id);
         form.AddField("username", name);
-        
+
 
         string requestName = "api/v1/auth/social_login";
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
@@ -349,30 +354,76 @@ public class AuthManager : MonoBehaviour
             {
                 Debug.Log(www.downloadHandler.text);
                 OnSuccess(www.downloadHandler.text);
-               
+
             }
         }
     }
-    IEnumerator PostLoginUserRequest(string email , string password)
+
+
+    IEnumerator GetCsrfToken(Action<string> onSuccess, Action<string> onError)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("email", email);
-        form.AddField("password", password);
-        string requestName = "api/v1/auth/login";
-        using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
+        string csrfTokenUrl = BASE_URL + "api/auth/csrf";
+        using (UnityWebRequest www = UnityWebRequest.Get(csrfTokenUrl))
         {
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
-               // ConsoleManager.instance.ShowMessage("Email or Password is Incorrect");
+                Debug.Log(www.error);
+                onError?.Invoke(www.error);
+            }
+            else
+            {
+                // Parse the JSON response into a CsrfTokenResponse object
+                CsrfTokenResponse tokenResponse = JsonUtility.FromJson<CsrfTokenResponse>(www.downloadHandler.text);
+                Debug.Log("CSRF Token: " + tokenResponse.csrfToken);
+                onSuccess?.Invoke(tokenResponse.csrfToken);
+                // yield return tokenResponse.csrfToken;
+                // Use the token for further processing
+            }
+        }
+    }
+
+
+
+    IEnumerator PostLoginUserRequest(string email, string password)
+    {
+
+
+        string csrfToken = null;
+        yield return StartCoroutine(GetCsrfToken(value => csrfToken = value, onError => Debug.LogError(onError)));
+
+        Debug.Log("CSRF Token: " + csrfToken);
+
+        WWWForm form = new WWWForm();
+        form.AddField("email", email);
+        form.AddField("password", password);
+        form.AddField("csrfToken", csrfToken);
+        form.AddField("walletType", "emailPass");
+        string callbackUrl = "http://localhost:3000/";
+        form.AddField("json", "true");
+        form.AddField("callbackUrl", callbackUrl);
+
+
+
+        // string requestName = "api/v1/auth/login";
+        string requestName = "api/auth/callback/credentials";
+        using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
+        {
+            yield return www.SendWebRequest();
+
+
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                // ConsoleManager.instance.ShowMessage("Email or Password is Incorrect");
                 LoadingManager.instance.loading.SetActive(false);
                 Debug.Log(www.error);
                 Debug.Log(www.downloadHandler.text);
 
-                if(www.error == "Cannot resolve destination host")
+                if (www.error == "Cannot resolve destination host")
                 {
-                  ConsoleManager.instance.ShowMessage("Network Error");
+                    ConsoleManager.instance.ShowMessage("Network Error");
                 }
                 else
                 {
@@ -384,16 +435,65 @@ public class AuthManager : MonoBehaviour
                     erorMsgChild.text = "Email or Password is Incorrect";
                 }
 
-                
+
 
             }
             else
             {
-                OnSuccess(www.downloadHandler.text);
+                Debug.Log("Status code" + www.responseCode);
+
+                var data = www.downloadHandler.text;
+                if (data.Contains("error"))
+                {
+                    Debug.Log("Error found in the response");
+                }
+                else if (data.Contains("csrf"))
+                {
+                    Debug.Log("csrf error");
+                }
+                else
+                {
+
+                    // Extract the session token from the response headers
+                    string sessionToken = www.GetResponseHeader("set-cookie");
+                    Debug.Log("Session Token: " + sessionToken);
+                    Token = sessionToken;
+                    StartCoroutine(GetRequestWithSessionToken(sessionToken));
+
+
+                }
+
+                // OnSuccess(www.downloadHandler.text);
             }
-            Debug.Log(BASE_URL+ requestName);
+            Debug.Log(BASE_URL + requestName);
         }
     }
+
+    IEnumerator GetRequestWithSessionToken(string sessionToken)
+    {
+        string url = BASE_URL + "api/game/user";
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            www.SetRequestHeader("set-cookie", sessionToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Process the response
+                Debug.Log(www.downloadHandler.text);
+                OnSuccess(www.downloadHandler.text);
+            }
+        }
+    }
+
+
+
 
 
     IEnumerator PostUpdateScoreRequest(string Id, string score)
@@ -432,9 +532,9 @@ public class AuthManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(1);
-    
-    // LoadingManager.instance.loading.SetActive(true);
-    // StartCoroutine(SignOutRequest());
+
+        // LoadingManager.instance.loading.SetActive(true);
+        // StartCoroutine(SignOutRequest());
     }
 
     IEnumerator SignOutRequest()
@@ -477,7 +577,7 @@ public class AuthManager : MonoBehaviour
 
     IEnumerator GetScoreRequest()
     {
-      
+
         string requestName = "GetScores.php";
         using (UnityWebRequest www = UnityWebRequest.Get(BASE_URL + requestName))
         {
@@ -496,7 +596,7 @@ public class AuthManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Scores: "+ www.downloadHandler.text);
+                    Debug.Log("Scores: " + www.downloadHandler.text);
                 }
 
             }
@@ -510,12 +610,12 @@ public class AuthManager : MonoBehaviour
         string requestName = "api/v1/users/delete";
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
-            www.SetRequestHeader("Authorization", "Bearer "+Token);
+            www.SetRequestHeader("Authorization", "Bearer " + Token);
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
-             
+
                 ConsoleManager.instance.ShowMessage("Network Error");
                 LoadingManager.instance.loading.SetActive(false);
                 Debug.Log(www.error);
@@ -526,7 +626,7 @@ public class AuthManager : MonoBehaviour
                 PlayerPrefs.DeleteAll();
                 LoadingManager.instance.loading.SetActive(false);
                 deletedUserAcount deleteUserAcount = JsonUtility.FromJson<deletedUserAcount>(www.downloadHandler.text);
-                if (deleteUserAcount.success==true)
+                if (deleteUserAcount.success == true)
                 {
                     ConsoleManager.instance.ShowMessage("Account Deleted");
                     StartCoroutine(ExitApplication());
@@ -552,7 +652,7 @@ public class AuthManager : MonoBehaviour
                 ConsoleManager.instance.ShowMessage("Network Error");
                 LoadingManager.instance.loading.SetActive(false);
                 Debug.Log(www.error);
-                
+
             }
             else
             {
@@ -580,40 +680,39 @@ public class AuthManager : MonoBehaviour
     {
         //here make a bool which would get false after calling animation
         Debug.Log(json);
-        root = JsonUtility.FromJson<DailyPointsRewardRoot>(json);
+        user = JsonUtility.FromJson<SessionUser>(json);
         IsLogged = "true";
-        Debug.Log("Login Success Function");
-        Debug.Log(root.meta.token);
 
-        Token = root.meta.token;
-        Name = root.user.first_name + " " + root.user.last_name;
-        Email = root.user.email;
-        UserId = root.user.id;
-        Username = root.user.username;
-        UserNameofUser = Username;
+        Debug.Log("Login Success Function");
+        Name = user.name;
+        Email = user.email;
+        UserId = user.id;
+        Username = user.name;
+        Wallet_Address = user.id;
+        // UserNameofUser = user.;
         //string Description = root.Datum.description.ToString();
         //Debug.Log("sabababa" + Description);
-       
+
 
         Debug.Log("name: " + Name + " Email: " + Email + "Username: " + Username);
 
-        if (root.user.wallet_address == null || root.user.wallet_address == string.Empty)
-        {
-            Wallet_Address = "";
-        }
-        else
-        {
-            Wallet_Address = root.user.wallet_address;
-        }
+        // if (root.user.wallet_address == null || root.user.wallet_address == string.Empty)
+        // {
+        //     Wallet_Address = "";
+        // }
+        // else
+        // {
+        //     Wallet_Address = root.user.wallet_address;
+        // }
 
-        if (root.user.ethereum_address == null || root.user.ethereum_address == string.Empty) 
-        {
-            ethereum_address = "";
-        }
-        else
-        {
-            ethereum_address = (string)root.user.ethereum_address;
-        }
+        // if (root.user.ethereum_address == null || root.user.ethereum_address == string.Empty)
+        // {
+        //     ethereum_address = "";
+        // }
+        // else
+        // {
+        //     ethereum_address = (string)root.user.ethereum_address;
+        // }
 
         SceneController.LoadScene(2);
     }
@@ -626,6 +725,7 @@ public class AuthManager : MonoBehaviour
         LocationDataManager.canCollect = true;
         SceneManager.LoadScene("MapScene");
     }
+
     IEnumerator ReloadSceneForCollectQuietly()
     {
         yield return new WaitForSeconds(5);
@@ -635,7 +735,39 @@ public class AuthManager : MonoBehaviour
 
     public void VisitWadzzoCom()
     {
-        Application.OpenURL("https://www.wadzzo.com/");
+        Application.OpenURL("https://www.action-tokens.com/");
     }
 
+    public void VisitGallery()
+    {
+        Application.OpenURL("https://gallery.action-tokens.com/");
+    }
+
+    public void VisitCommunity()
+    {
+        Application.OpenURL("https://map.action-tokens.com");
+    }
+
+    public void VisitPrivacy()
+    {
+        Application.OpenURL("https://www.action-tokens.com/terms");
+    }
 }
+
+[System.Serializable]
+public class CsrfTokenResponse
+{
+    public string csrfToken;
+}
+
+[System.Serializable]
+public class SessionUser
+{
+    public string name;
+    public string email;
+    public string image;
+    public string id;
+    public string walletType;
+}
+
+
