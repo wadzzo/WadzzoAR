@@ -14,7 +14,7 @@ public class FollowedBrandAPIManager : MonoBehaviour
         }
     }
     private string BaseURL = AuthManager.BASE_URL;
-    public const string requestName = "api/v1/brands/followed_brands";
+    public const string requestName = "api/game/followed_brands";
     private string tokken;
     private string brand_name;
     private GameObject dataItems, contentArea, greenLineForBrandList, greenLineForFollowed, zeroEntryText;
@@ -56,9 +56,8 @@ public class FollowedBrandAPIManager : MonoBehaviour
         UnityWebRequest connectionRequest = UnityWebRequest.Get(URL);
 
         connectionRequest.downloadHandler = new DownloadHandlerBuffer();
-        connectionRequest.SetRequestHeader("Content-Type", "application/json");
 
-        connectionRequest.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+        connectionRequest.SetRequestHeader("Cookie",  AuthManager.Token);
         LoadingManager.instance.loading.SetActive(true);
         StartCoroutine(WaitForConnection(connectionRequest));
     }

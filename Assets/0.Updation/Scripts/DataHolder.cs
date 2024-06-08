@@ -162,15 +162,17 @@ public class DataHolder : MonoBehaviour
     public void UnFollowBrand(string brandID)
     {
         Debug.Log("unfollow request sent");
-        string URL = AuthManager.BASE_URL + request_Name + brandID;
-        UnityWebRequest connectionRequest = UnityWebRequest.Delete(URL);
+        WWWForm form = new WWWForm();
+        form.AddField("brand_id", brandID);
 
-        connectionRequest.downloadHandler = new DownloadHandlerBuffer();
-        connectionRequest.SetRequestHeader("Content-Type", "application/json");
+        // string URL = AuthManager.BASE_URL + request_Name + brandID;
 
-        connectionRequest.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+        // UnityWebRequest connectionRequest = UnityWebRequest.Delete(URL);
 
-        StartCoroutine(WaitForConnection(connectionRequest));
+        UnityWebRequest www = UnityWebRequest.Post(AuthManager.BASE_URL + "api/game/unfollow", form);
+        www.SetRequestHeader("Cookie", AuthManager.Token);
+
+        StartCoroutine(WaitForConnection(www));
         LoadingManager.instance.loading.SetActive(true);
     }
     IEnumerator WaitForConnection(UnityWebRequest req)
