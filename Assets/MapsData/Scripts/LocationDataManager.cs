@@ -162,7 +162,7 @@ public class LocationDataManager : MonoBehaviour
                 Vector2d toMeters = Conversions.LatLonToMeters(UserLocation.locations[i].lat, UserLocation.locations[i].lng);
                 //Debug.Log(lat_2 + long_2);
                 distance = (fromMeters - toMeters).magnitude;
-                //Debug.Log("here is the distance" + distance);
+                // Debug.Log("here is the distance" + distance);
 
                 if (distance < 500)
                 {
@@ -174,7 +174,7 @@ public class LocationDataManager : MonoBehaviour
                     {
                         if (users[i].auto_collect)
                         {
-                            //Debug.Log("auto_collect true "+ users[i].id);
+                            Debug.Log("auto_collect true "+ users[i].id);
                             userLoc = users[i].id;
                             currentCollectiongIndex = i;
                             canCollect = false;

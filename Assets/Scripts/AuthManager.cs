@@ -530,6 +530,7 @@ public class AuthManager : MonoBehaviour
 
     public void SignOut()
     {
+        Debug.Log("SignOut ih");
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(1);
 
@@ -751,6 +752,11 @@ public class AuthManager : MonoBehaviour
     public void VisitPrivacy()
     {
         Application.OpenURL("https://www.action-tokens.com/terms");
+    }
+
+    public void SignUPURL()
+    {
+        Application.OpenURL("https://vong.signup.com");
     }
 }
 
