@@ -55,7 +55,7 @@ public class BillBoardsAPICount : MonoBehaviour
     void Start()
     {
 
-        requestName = "/api/v1/locations/get_consumed_location";
+        requestName = "/api/game/locations/get_consumed_location";
         LoadingManager.instance.loading.SetActive(true);
         StartCoroutine(GetConsumedLocations());
 
@@ -68,7 +68,8 @@ public class BillBoardsAPICount : MonoBehaviour
         {
             LoadingManager.instance.loading.SetActive(true);
 
-            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            www.SetRequestHeader("Cookie",  AuthManager.Token);
                 yield return www.SendWebRequest();
                 if (www.isNetworkError || www.isHttpError)
                 {

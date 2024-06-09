@@ -14,7 +14,7 @@ public class totalBillboardCollect : MonoBehaviour
     string requestName;
     private void Start()
     {
-        requestName = "/api/v1/locations/get_consumed_location";
+        requestName = "/api/game/locations/get_consumed_location";
         StartCoroutine(GetConsumedLocations());
     }
 

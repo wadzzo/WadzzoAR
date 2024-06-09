@@ -197,14 +197,14 @@ public class AuthManager : MonoBehaviour
     public IEnumerator PostConsumeLocation(int id)
     {
         WWWForm form = new WWWForm();
-        form.AddField("id", id);
+        form.AddField("location_id", id);
 
-        string requestName = "api/v1/locations/consume";
+        string requestName = "api/game/locations/consume";
 
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
 
-            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            www.SetRequestHeader("Cookie",  AuthManager.Token);
 
             yield return www.SendWebRequest();
             ConsumeLocation Result1 = JsonUtility.FromJson<ConsumeLocation>(www.downloadHandler.text);

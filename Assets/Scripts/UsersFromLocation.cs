@@ -67,16 +67,11 @@ public class UsersFromLocation : MonoBehaviour
     // implement it according to new API 
     IEnumerator GetLocationsNew()
     {
-        //PlayerPrefs.GetString("UserMode")
-        //string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-        //string baseURL = "http://sdev.wadzzo.com";
-        string updatedRequestName = "api/v1/locations?mode=" + PlayerPrefsHandler.Mode + "&lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-        //Old_once
-        //string updatedRequestName = "/api/v1/locations?mode="+PlayerPrefsHandler.Mode+"?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-        #if (UNITY_EDITOR)
-                updatedRequestName = "api/game/locations"; //?mode="+ PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
-        #endif
-        //updatedRequestName = "http://sdev.wadzzo.com/api/v1/locations?mode=" + PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
+        // string updatedRequestName = "api/v1/locations?mode=" + PlayerPrefsHandler.Mode + "&lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
+        string updatedRequestName = "api/game/locations";
+        // #if (UNITY_EDITOR)
+        //         updatedRequestName = "api/game/locations"; //?mode="+ PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
+        // #endif
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + updatedRequestName))
         {
             // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
@@ -114,7 +109,7 @@ public class UsersFromLocation : MonoBehaviour
     {
         string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
 #if (UNITY_EDITOR)
-            requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
+                    requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
 #endif
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + requestName))
         {

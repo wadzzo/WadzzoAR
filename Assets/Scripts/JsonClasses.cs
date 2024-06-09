@@ -101,7 +101,7 @@ public class Datum
     public string collection_limit_remaining;
     public bool auto_collect;
     public string brand_image_url;
-    public int brand_id;
+    public string brand_id;
 }
 [Serializable]
 public class LocationRoot
@@ -126,7 +126,7 @@ namespace MapLocations
         public int collection_limit_remaining;
         public bool auto_collect;
         public string brand_image_url;
-        public int brand_id;
+        public string brand_id;
     }
     [Serializable]
     public class Root

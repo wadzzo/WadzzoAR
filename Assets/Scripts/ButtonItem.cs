@@ -260,12 +260,12 @@ public class ButtonItem : MonoBehaviour
     IEnumerator PostDeleteBillboard(int id)
     {
         WWWForm form = new WWWForm();
-        form.AddField("id", id);
-        string requestName = "api/v1/locations/hide_billboard";
+        form.AddField("location_id", id);
+        string requestName = "api/game/locations/hide_billboard";
         using (UnityWebRequest www = UnityWebRequest.Post(AuthManager.BASE_URL + requestName, form))
         {
 
-            www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
+            www.SetRequestHeader("Cookie",  AuthManager.Token);
 
             yield return www.SendWebRequest();
             ConsumeLocation Result1 = JsonUtility.FromJson<ConsumeLocation>(www.downloadHandler.text);
@@ -297,11 +297,12 @@ public class ButtonItem : MonoBehaviour
     }
     IEnumerator PostViewCheck(int id)
     {
+        Debug.Log(id.GetType());
         WWWForm form = new WWWForm();
 
-        form.AddField("id", id);
+        form.AddField("location_id", id);
 
-        string requestName = "api/v1/locations/view_billboard";
+        string requestName = "api/game/locations/view_billboard";
 
         using (UnityWebRequest www = UnityWebRequest.Post(AuthManager.BASE_URL + requestName, form))
         {
