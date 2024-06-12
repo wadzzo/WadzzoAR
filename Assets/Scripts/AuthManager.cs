@@ -138,7 +138,13 @@ public class AuthManager : MonoBehaviour
     }
 
     // public static string BASE_URL = "https://admin.action-token.com/";
-    public static string BASE_URL = "http://localhost:3000/";
+
+    #if UNITY_EDITOR
+        public static string BASE_URL = "http://localhost:3000/";
+    #else
+        public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
+    #endif
+
 
 
 
@@ -418,15 +424,30 @@ public class AuthManager : MonoBehaviour
             {
                 // ConsoleManager.instance.ShowMessage("Email or Password is Incorrect");
                 LoadingManager.instance.loading.SetActive(false);
-                Debug.Log(www.error);
+                Debug.Log("Status code: ih" + www.responseCode);
+                Debug.Log("Error message: ih" + www.error);
                 Debug.Log(www.downloadHandler.text);
 
+                var data = www.downloadHandler.text;
+                if (data.Contains("error"))
+                {
+                    Debug.Log("Error found in the response");
+                }
+                if(data.Contains("wrong-password")) {
+                    Debug.Log("wrong password");
+                }
                 if (www.error == "Cannot resolve destination host")
                 {
                     ConsoleManager.instance.ShowMessage("Network Error");
                 }
+
+                if(data.Contains("user-not-found"))
+                {
+                    ConsoleManager.instance.ShowMessage("User not found! Please Sign Up");
+                }
                 else
                 {
+                    
                     GameObject erorMsg = InputUIManager.instance.s_emailInput.transform.Find("ErorBox").gameObject;
                     GameObject erorMsg1 = InputUIManager.instance.s_passwordInput.transform.Find("ErorBox").gameObject;
                     erorMsg.SetActive(true);
@@ -440,14 +461,8 @@ public class AuthManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Status code" + www.responseCode);
-
                 var data = www.downloadHandler.text;
-                if (data.Contains("error"))
-                {
-                    Debug.Log("Error found in the response");
-                }
-                else if (data.Contains("csrf"))
+                if (data.Contains("csrf"))
                 {
                     Debug.Log("csrf error");
                 }
