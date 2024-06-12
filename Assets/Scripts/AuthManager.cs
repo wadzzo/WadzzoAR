@@ -436,6 +436,7 @@ public class AuthManager : MonoBehaviour
                 if(data.Contains("wrong-password")) {
                     Debug.Log("wrong password");
                 }
+
                 if (www.error == "Cannot resolve destination host")
                 {
                     ConsoleManager.instance.ShowMessage("Network Error");
@@ -444,6 +445,10 @@ public class AuthManager : MonoBehaviour
                 if(data.Contains("user-not-found"))
                 {
                     ConsoleManager.instance.ShowMessage("User not found! Please Sign Up");
+                }
+                else if(data.Contains("temporarily"))
+                {
+                    ConsoleManager.instance.ShowMessage("Too many request: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.");
                 }
                 else
                 {
@@ -623,7 +628,7 @@ public class AuthManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        string requestName = "api/v1/users/delete";
+        string requestName = "api/game/users/delete";
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
             www.SetRequestHeader("Authorization", "Bearer " + Token);
@@ -656,7 +661,7 @@ public class AuthManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        string requestName = "api/v1/users/deactivate";
+        string requestName = "api/game/users/deactivate";
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
             www.SetRequestHeader("Authorization", "Bearer " + Token);
@@ -771,7 +776,7 @@ public class AuthManager : MonoBehaviour
 
     public void SignUPURL()
     {
-        Application.OpenURL("https://vong.signup.com");
+        Application.OpenURL(AuthManager.BASE_URL + "sign-up");
     }
 }
 
