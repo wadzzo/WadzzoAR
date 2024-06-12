@@ -134,8 +134,10 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 3.3
-  preloadedAssets: []
+  bundleVersion: 3.3.1
+  preloadedAssets:
+  - {fileID: 4800000, guid: c9f956787b1d945e7b36e0516201fc76, type: 3}
+  - {fileID: 4963175626410626047, guid: 18e2dc0f583f0174a9b0c3183a099e46, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -250,8 +252,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{dedicated}: Downloads/EuphoriaMaster.keystore'
-  AndroidKeyaliasName: euphoriamaster
+  AndroidKeystoreName: '{inproject}: playstore-key.keystore'
+  AndroidKeyaliasName: wadzzo
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
@@ -894,7 +896,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -909,11 +917,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 0d845a10-91bf-4ba2-b916-3ced07d138c5
+  cloudProjectId: a0b8ad8d-cf18-49ae-9297-399ed8b6ee9f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: WADZZO
-  organizationId: saminasiroffice
+  projectName: Wadzzo (1)
+  organizationId: ahammedzonaid
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

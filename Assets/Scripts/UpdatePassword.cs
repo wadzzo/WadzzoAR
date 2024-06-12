@@ -32,8 +32,10 @@ public class UpdatePassword : MonoBehaviour
     public void Start()
     {
         emailInput.text = AuthManager.Email;
+        confirmInput.text = AuthManager.Wallet_Address;
         Debug.Log(AuthManager.Email);
         emailInput.interactable = false;
+        confirmInput.interactable = false;
        
     }
 
