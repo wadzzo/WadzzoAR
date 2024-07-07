@@ -14,6 +14,7 @@ using System;
         public string first_name;
         public string last_name;
         public string email;
+        public string logo;
         public object wallet_address;
         public object ethereum_address;
         public bool followed_by_current_user;

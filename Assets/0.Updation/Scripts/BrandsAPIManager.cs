@@ -17,7 +17,7 @@ public class BrandsAPIManager : MonoBehaviour
     public const string requestName = "api/game/brands";
     private string tokken;
     [HideInInspector]
-    public string brand_name,responseText;
+    public string brand_name, responseText;
     private GameObject dataItems, contentArea, greenLineForBrandList, greenLineForFollowed, zeroDataAlert;
     private RectTransform content_area;
     private List<GameObject> userData = new List<GameObject>();
@@ -29,7 +29,8 @@ public class BrandsAPIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        } else if (instance != null)
+        }
+        else if (instance != null)
         {
             Destroy(this.gameObject);
         }
@@ -39,7 +40,7 @@ public class BrandsAPIManager : MonoBehaviour
         contentArea = UIReferenceContainer.Instance.contentAreaForAvailableBrands;
         dataItems = UIReferenceContainer.Instance.followListPrefab;
         //greenLineForBrandList = UIReferenceContainer.Instance.greenLineAvailableList;
-       // greenLineForFollowed = UIReferenceContainer.Instance.greenLineFollowedList;
+        // greenLineForFollowed = UIReferenceContainer.Instance.greenLineFollowedList;
         zeroDataAlert = UIReferenceContainer.Instance.noDataMessage;
         sizeToIncrease = UIReferenceContainer.Instance.sizeToIncrease;
         content_area = contentArea.GetComponent<RectTransform>();
@@ -97,7 +98,7 @@ public class BrandsAPIManager : MonoBehaviour
             }
             else
             {
-                
+
                 zeroDataAlert.SetActive(false);
                 GameObject ob;
                 //Debug.Log("Request Sent Successfully");
@@ -126,6 +127,12 @@ public class BrandsAPIManager : MonoBehaviour
                     ob = Instantiate(dataItems, contentArea.transform);
                     userData.Add(ob);
                     ob.GetComponent<DataHolder>().brandID = identities.users[i].id;
+                    // ob.GetComponent<DataHolder>(). = identities.users[i].id;
+                    if (!string.IsNullOrEmpty(identities.users[i].logo))
+                    {
+                        ob.GetComponent<DataHolder>().GetBrandLogo(identities.users[i].logo);
+                    }
+
                     ob.GetComponent<DataHolder>().brandName.text = (identities.users[i].first_name + identities.users[i].last_name);
                     if (identities.users[i].followed_by_current_user)
                     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.Networking; 
+using UnityEngine.Networking;
 
 
 public class DataHolder : MonoBehaviour
@@ -9,12 +9,18 @@ public class DataHolder : MonoBehaviour
     public Button followButton;
     public Button unfollowButton;
     public Text brandName;
+    public Image brandLogo;
     public string brandID;
     public bool SearchList;
     private void Awake()
     {
         followButton.onClick.AddListener(FollowFunc);
         unfollowButton.onClick.AddListener(UnfollowFunc);
+    }
+
+    public void GetBrandLogo(string uri)
+    {
+        Davinci.get().load(uri).into(brandLogo).start();
     }
     public void FollowFunc()
     {
@@ -24,7 +30,7 @@ public class DataHolder : MonoBehaviour
         StartCoroutine(WaitForMethodFollow());
         //FollowedBrandAPIManager.Instance.SendRequest();
         //BrandsAPIManager.Instance.SendRequest();
-       
+
         //if (!SearchList)
         //{
         //    //FollowedBrandAPIManager.Instance.SendRequest();
@@ -53,7 +59,7 @@ public class DataHolder : MonoBehaviour
         StartCoroutine(WaitForMethodUnFollow());
         //FollowedBrandAPIManager.Instance.SendRequest();
         //BrandsAPIManager.Instance.SendRequest();
-        
+
         //if (!SearchList)
         //{
         //    //FollowedBrandAPIManager.Instance.SendRequest();
@@ -72,12 +78,12 @@ public class DataHolder : MonoBehaviour
         //{
         //    //FollowedBrandAPIManager.Instance.SendRequest();
         //    //BrandsAPIManager.Instance.SendRequest();
-            
+
         //}
     }
     IEnumerator WaitForMethodFollow()
     {
-        yield return new WaitUntil (()=> follow_message);
+        yield return new WaitUntil(() => follow_message);
         followButton.gameObject.SetActive(false);
         unfollowButton.gameObject.SetActive(true);
         FollowedBrandAPIManager.Instance.SendRequest();

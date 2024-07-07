@@ -98,7 +98,7 @@ public class UsersFromLocation : MonoBehaviour
                 //}
                 Debug.Log("Locations " + www.downloadHandler.text);
                 LoadingManager.instance.loading.SetActive(false);
-                ConsoleManager.instance.ShowMessage("Location Found!");
+                // ConsoleManager.instance.ShowMessage("Location Found!");
 
                 LocationDataManager.instance.PlacePoints(www.downloadHandler.text);
             }
@@ -136,7 +136,7 @@ public class UsersFromLocation : MonoBehaviour
                 //}
                 Debug.Log("Locations " + www.downloadHandler.text);
                 LoadingManager.instance.loading.SetActive(false);
-                ConsoleManager.instance.ShowMessage("Location Found!");
+                // ConsoleManager.instance.ShowMessage("Location Found!");
 
                 LocationDataManager.instance.PlacePoints(www.downloadHandler.text);
             }
