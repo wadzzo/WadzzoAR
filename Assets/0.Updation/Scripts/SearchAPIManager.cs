@@ -100,6 +100,10 @@ public class SearchAPIManager : MonoBehaviour
                     ob = Instantiate(dataItems, UIReferenceContainer.Instance.contentAreaForSearchList.transform);
                     userData.Add(ob);
                     ob.GetComponent<DataHolder>().brandID = identities.users[i].id;
+                    if (!string.IsNullOrEmpty(identities.users[i].logo))
+                    {
+                        ob.GetComponent<DataHolder>().GetBrandLogo(identities.users[i].logo);
+                    }
                     ob.GetComponent<DataHolder>().brandName.text = (identities.users[i].first_name + identities.users[i].last_name);
                     if (identities.users[i].followed_by_current_user)
                     {

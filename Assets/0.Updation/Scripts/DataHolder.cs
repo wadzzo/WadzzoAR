@@ -20,8 +20,14 @@ public class DataHolder : MonoBehaviour
 
     public void GetBrandLogo(string uri)
     {
-        Davinci.get().load(uri).into(brandLogo).start();
+        Debug.Log("Brand Logo URI: " + uri);
+        Davinci.get()
+        .load(uri)
+        .setLoadingPlaceholder(brandLogo.sprite.texture)
+        .setErrorPlaceholder(brandLogo.sprite.texture)
+        .into(brandLogo).start();
     }
+
     public void FollowFunc()
     {
         followButton.gameObject.SetActive(false);
