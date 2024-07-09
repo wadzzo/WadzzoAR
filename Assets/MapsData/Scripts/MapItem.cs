@@ -87,8 +87,112 @@ public class MapItem : MonoBehaviour
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
         Sprite thumbnail = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+        
         BrandTexture = thumbnail.texture;
-        GetComponent<Renderer>().material.mainTexture = thumbnail.texture;
+       
+        GetComponent<Renderer>().material.mainTexture = BrandTexture;
+
+        if(user.collected)
+        {
+            YelloLineEnable();
+        }
+
+        
+    }
+
+    void YelloLineEnable() {
+        Transform nameBgTransform = transform.Find("CollectedLine");
+        if (nameBgTransform != null)
+        {
+            nameBgTransform.gameObject.SetActive(true);
+        }
+    }
+    Texture2D AddCircularBorder(Texture2D texture, Color borderColor, int borderWidth)
+    {
+        Texture2D textureWithBorder = new Texture2D(texture.width, texture.height);
+        Graphics.CopyTexture(texture, textureWithBorder);
+
+        float rSquared = Mathf.Pow(texture.width / 2, 2);
+
+        for (int y = 0; y < texture.height; y++)
+        {
+            for (int x = 0; x < texture.width; x++)
+            {
+                if (Mathf.Pow(x - texture.width / 2, 2) + Mathf.Pow(y - texture.height / 2, 2) >= rSquared - (borderWidth * borderWidth) &&
+                    Mathf.Pow(x - texture.width / 2, 2) + Mathf.Pow(y - texture.height / 2, 2) <= rSquared)
+                {
+                    textureWithBorder.SetPixel(x, y, borderColor);
+                }
+            }
+        }
+
+        textureWithBorder.Apply();
+        return textureWithBorder;
+    }
+    void ApplyBorderToThumbnail(Texture2D texture, Color borderColor, int borderWidth)
+    {
+        for (int y = 0; y < texture.height; y++)
+        {
+            for (int x = 0; x < texture.width; x++)
+            {
+                // Check if the current pixel is within the border width
+                if (x < borderWidth || x >= texture.width - borderWidth || y < borderWidth || y >= texture.height - borderWidth)
+                {
+                    texture.SetPixel(x, y, borderColor);
+                }
+            }
+        }
+        texture.Apply();
+    }
+
+    private void AddColorOverlay(Texture2D texture, Color borderColor, int borderWidth)
+    {
+        for (int y = 0; y < texture.height; y++)
+        {
+            for (int x = 0; x < texture.width; x++)
+            {
+                // Check if the current pixel is within the border area
+                if (x < borderWidth || x >= (texture.width - borderWidth) || y < borderWidth || y >= (texture.height - borderWidth))
+                {
+                    texture.SetPixel(x, y, borderColor); // Set the border color
+                }
+                // No need to change the color of pixels inside the border
+            }
+        }
+        texture.Apply(); // Apply changes to the texture
+    }
+
+    // Assuming this method is called after the original Sprite has been created
+    void xApplyBorderToThumbnail(Sprite originalSprite, Color borderColor, int borderWidth)
+    {
+        Texture2D originalTexture = originalSprite.texture;
+        Texture2D textureCopy = new Texture2D(originalTexture.width, originalTexture.height);
+        Graphics.CopyTexture(originalTexture, textureCopy);
+
+        // Apply the border to the copied texture
+        AddBorder(textureCopy, borderColor, borderWidth);
+
+        // Create a new Sprite with the modified texture
+        Sprite newSprite = Sprite.Create(textureCopy, new Rect(0.0f, 0.0f, textureCopy.width, textureCopy.height), new Vector2(0.5f, 0.5f));
+        
+        // Apply the new Sprite to your game object
+        GetComponent<SpriteRenderer>().sprite = newSprite;
+    }
+
+    void AddBorder(Texture2D texture, Color borderColor, int borderWidth)
+    {
+        for (int y = 0; y < texture.height; y++)
+        {
+            for (int x = 0; x < texture.width; x++)
+            {
+                if (x < borderWidth || x >= (texture.width - borderWidth) || y < borderWidth || y >= (texture.height - borderWidth))
+                {
+                    texture.SetPixel(x, y, borderColor);
+                }
+            }
+        }
+        texture.Apply();
     }
 
     IEnumerator GetBrandThumbnail(string uri)
@@ -145,12 +249,13 @@ public class MapItem : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Map Item start runned");
         try
         {
             if (user.collected)
             {
-                //GetComponent<Renderer>().material.mainTexture = yellow;
-                //GetComponent<Renderer>().material.mainTexture = BrandTexture;
+                // GetComponent<Renderer>().material.mainTexture = yellow;
+                // GetComponent<Renderer>().material.mainTexture = BrandTexture;
             }
             StartCoroutine(GetThumbnail(user.image_url));
         }

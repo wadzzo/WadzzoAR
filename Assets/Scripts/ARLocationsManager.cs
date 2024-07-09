@@ -33,7 +33,6 @@ public class ARLocationsManager : MonoBehaviour
     {
         //LoadingManager.instance.loading.SetActive(true);
 
-        //StartCoroutine(GetLocations());
         placeAtLocations.Init(LocationDataManager.UserLocation);
         LoadingManager.instance.loading.SetActive(false);
 

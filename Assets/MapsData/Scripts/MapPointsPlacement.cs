@@ -69,7 +69,7 @@ public class MapPointsPlacement : MonoBehaviour {
                 var mapPoint = Instantiate(CheckpointIndicator);
                 mapPoint.transform.position = _map.GeoToWorldPosition(_locations[count], false);
                 mapPoint.GetComponentInChildren<MapItem>().user = LocationDataManager.instance.users[i];
-                //mapPoint.GetComponentInChildren<MapItem>().LoadBrandTexture();
+                mapPoint.GetComponentInChildren<MapItem>().LoadBrandTexture();
 
 
                 // mapPoint.GetComponentInChildren<MapItem>().DisplayNames();
