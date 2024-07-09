@@ -86,21 +86,42 @@ public class MapItem : MonoBehaviour
         bytes = File.ReadAllBytes(localURL);
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
-        Sprite thumbnail = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
-        
+        if(user.collected){
+            texture = ConvertToGrayscale(texture);
+        }
+
+        Sprite thumbnail = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         BrandTexture = thumbnail.texture;
        
-        GetComponent<Renderer>().material.mainTexture = BrandTexture;
+        Renderer renderer =  GetComponent<Renderer>();
+        renderer.material.mainTexture = BrandTexture;
 
         if(user.collected)
         {
-            YelloLineEnable();
+            // YelloLineEnable();
         }
 
         
     }
+    Texture2D ConvertToGrayscale(Texture2D originalTexture)
+    {
+        Color[] originalColors = originalTexture.GetPixels();
+        Color[] grayscaleColors = new Color[originalColors.Length];
 
+        for (int i = 0; i < originalColors.Length; i++)
+        {
+            Color originalColor = originalColors[i];
+            float grayScale = (originalColor.r + originalColor.g + originalColor.b) / 3f;
+            grayscaleColors[i] = new Color(grayScale, grayScale, grayScale, originalColor.a);
+        }
+
+        Texture2D grayscaleTexture = new Texture2D(originalTexture.width, originalTexture.height);
+        grayscaleTexture.SetPixels(grayscaleColors);
+        grayscaleTexture.Apply();
+        return grayscaleTexture;
+    }
+    
     void YelloLineEnable() {
         Transform nameBgTransform = transform.Find("CollectedLine");
         if (nameBgTransform != null)
