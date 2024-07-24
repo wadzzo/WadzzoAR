@@ -25,7 +25,7 @@ public class TutorialHelpButtonManager : MonoBehaviour
 
     public void CollectionPanelHelpButton() {
         headerText.text = "My Collection";
-        bodyText.text = "This is where you can view all the cards you have collected.";
+        bodyText.text = "Your personal treasure trove awaits! Here you'll find all your collected items. Claim your rewards and bring them to life with our stunning AR technology – it's like magic in your hands!";
         tutorialImage.gameObject.SetActive(true);
     }
 
