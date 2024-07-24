@@ -117,9 +117,9 @@ public class UsersFromLocation : MonoBehaviour
     IEnumerator GetLocations()
     {
         string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-#if (UNITY_EDITOR)
-                    requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
-#endif
+        #if (UNITY_EDITOR)
+                            requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
+        #endif
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + requestName))
         {
             www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
