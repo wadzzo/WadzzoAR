@@ -9,6 +9,8 @@ using TMPro;
 public class TutorialManager : MonoBehaviour
 {
     public Button[] menuButtons;
+    int currentStep = 0;
+    public GameObject tutorialBoxPrefab;
 
     public class TutorialStep
     {
@@ -22,7 +24,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    
+
     // add public image overlay
     public Image overlay;
 
@@ -30,6 +32,8 @@ public class TutorialManager : MonoBehaviour
 
     public Button nextButton;
     public Button skipButton;
+
+
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
 
     /*
@@ -47,22 +51,69 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep mapStep = new TutorialStep("Map", "Embark on an adventure! The map is your gateway to exploring the world. Discover hidden treasures and exciting items nearby.");
     private TutorialStep collectionStep = new TutorialStep("My Collection", "Find all your collected items here. Claim your rewards and bring them to life with our AR technology.");
     private TutorialStep searchStep = new TutorialStep("Search", "Search for brands to follow and view your followed brands.");
-    private TutorialStep myAccountStep  = new TutorialStep("My Account", "Access and manage your personal information, including email and password.");
+    private TutorialStep myAccountStep = new TutorialStep("My Account", "Access and manage your personal information, including email and password.");
     private TutorialStep settingsStep = new TutorialStep("Settings", "Manage your data, find our website, or delete your account. It's all just a tap away.");
     private TutorialStep reCenterStep = new TutorialStep("Re-center", "Tap the Re-center button to bring your location back to the center of the map.");
     private TutorialStep ARStep = new TutorialStep("AR", "Use our AR technology to spot virtual items in the real world and add them to your collection.");
 
 
-    
-    // a textmesh pro header text
-    public TMP_Text headerText;
-    public TMP_Text bodyText;
 
+    // a textmesh pro header text
+
+    // TutorialBox prefab
+
+    // Instantiate TutorialBox prefab
+    // private void InstantiateTutorialBox()
+    // {
+    //     GameObject tutorialBox = Instantiate(tutorialBoxPrefab, transform);
+    //     TMP_Text tutorialHeaderText = tutorialBox.GetComponentInChildren<TMP_Text>();
+    //     TMP_Text tutorialBodyText = tutorialBox.GetComponentInChildren<TMP_Text>();
+
+    //     tutorialHeaderText.text = headerText.text;
+    //     tutorialBodyText.text = bodyText.text;
+    // }
     // Start is called before the first frame update
+
+
+    private void changeTutorialText(string header, string body)
+    {
+        TMP_Text[] textComponents = tutorialBoxPrefab.GetComponentsInChildren<TMP_Text>();
+
+        // Assuming the first one is always headerText and the second one is always bodyText
+        // This assumption might need to be adjusted based on your actual prefab structure
+        TMP_Text headerTextComponent = null;
+        TMP_Text bodyTextComponent = null;
+
+        foreach (var textComponent in textComponents)
+        {
+            if (textComponent.gameObject.name == "header")
+            { // Assuming the header text game object is named "HeaderText"
+                headerTextComponent = textComponent;
+            }
+            else if (textComponent.gameObject.name == "TutorialContent")
+            { // Assuming the body text game object is named "BodyText"
+                bodyTextComponent = textComponent;
+            }
+        }
+
+        if (headerTextComponent != null)
+        {
+            headerTextComponent.text = header;
+        }
+
+        if (bodyTextComponent != null)
+        {
+            bodyTextComponent.text = body;
+        }
+    }
     void Start()
     {
+
+
+
         Debug.Log("Tutorial Manager Start");
-        if (ShouldShowTutorial()) {
+        if (ShouldShowTutorial())
+        {
             Debug.Log("Showing Tutorial");
             overlay.gameObject.SetActive(true);
             tutorialSteps.Add(mapStep);
@@ -73,47 +124,53 @@ public class TutorialManager : MonoBehaviour
             tutorialSteps.Add(reCenterStep);
             tutorialSteps.Add(ARStep);
 
-            headerText.text = tutorialSteps[0].Title;
-            bodyText.text = tutorialSteps[0].Body;
+            changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
+
+
             menuButtons[0].GetComponent<MenuButton>().SelectButton();
             // nextButton.onClick.AddListener(Next);
             // skipButton.onClick.AddListener(Previous);
-        } else {
+        }
+        else
+        {
             Debug.Log("Disabling Tutorial Overlay");
             overlay.gameObject.SetActive(false);
         }
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    int currentStep = 0;
 
-    public void Next (){
-        if(currentStep < menuButtons.Length - 1) {
+    public void Next()
+    {
+        if (currentStep < menuButtons.Length - 1)
+        {
             menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
-            currentStep ++;
+            currentStep++;
             menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
-            headerText.text = tutorialSteps[currentStep].Title;
-            bodyText.text = tutorialSteps[currentStep].Body;
+            changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+
         }
     }
 
-    public void Previous (){
-        if (currentStep > 0) {
+    public void Previous()
+    {
+        if (currentStep > 0)
+        {
             menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
-            currentStep --;
+            currentStep--;
             menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
-            headerText.text = tutorialSteps[currentStep].Title;
-            bodyText.text = tutorialSteps[currentStep].Body;
+            changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
     }
 
-    public void SkipTutorial() {
+    public void SkipTutorial()
+    {
         // skip the tutorial
 
 
@@ -122,17 +179,20 @@ public class TutorialManager : MonoBehaviour
         EndTutorial();
     }
 
-    public bool ShouldShowTutorial() {
-    // Check if the "TutorialSkipped" flag is set in PlayerPrefs
+    public bool ShouldShowTutorial()
+    {
+        // Check if the "TutorialSkipped" flag is set in PlayerPrefs
         return PlayerPrefs.GetInt("TutorialSkipped", 0) == 0;
     }
 
-    public void EndTutorial() {
+    public void EndTutorial()
+    {
         overlay.gameObject.SetActive(false);
     }
 
 
-    public void resetTutorial() {
+    public void resetTutorial()
+    {
         ConsoleManager.instance.ShowMessage("The tutorial has been reset.");
         // flag to show tutorial
         PlayerPrefs.SetInt("TutorialSkipped", 0);

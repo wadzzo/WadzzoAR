@@ -13,6 +13,7 @@ public class UsersFromLocation : MonoBehaviour
 
     public static UsersFromLocation instance;
     public static AllLocationRot allLocationRot;
+    public   Image tutorialOverlay;
 
 
 
@@ -51,6 +52,13 @@ public class UsersFromLocation : MonoBehaviour
     }
     public void GetUserByLocations()
     {
+
+        if (tutorialOverlay.IsActive())
+        {
+            Debug.Log("Tutorial Overlay is active");
+            return;
+        }
+
         Debug.Log("Always call this API");
         LoadingManager.instance.loading.SetActive(true);
         //StartCoroutine(GetLocations());
@@ -72,6 +80,7 @@ public class UsersFromLocation : MonoBehaviour
         // #if (UNITY_EDITOR)
         //         updatedRequestName = "api/game/locations"; //?mode="+ PlayerPrefsHandler.Mode + "&lat=31.506239&lng=74.322964";
         // #endif
+
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + updatedRequestName))
         {
             // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
@@ -82,7 +91,7 @@ public class UsersFromLocation : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                ConsoleManager.instance.ShowMessage("hhhhNetwork Error!");
+                ConsoleManager.instance.ShowMessage("Network Error!");
                 Debug.Log("map " + www.error);
                 PlayerPrefs.DeleteAll();
                 SceneManager.LoadScene("Login");

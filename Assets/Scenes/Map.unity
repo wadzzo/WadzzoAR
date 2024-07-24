@@ -2708,8 +2708,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -59}
-  m_SizeDelta: {x: 0, y: 500}
+  m_AnchoredPosition: {x: 0, y: -74}
+  m_SizeDelta: {x: 0, y: 312.969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146741341
 MonoBehaviour:
@@ -2731,13 +2731,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'There are so many stuff to commemorate
-
-    > this could be logical and
-    and surfing and logincal doing.
-
-    over that collection and here you could
-    use this memoery to use this colection for noting. and helpu for user.'
+  m_text: Embark on an adventure! The map is your gateway to exploring the world.
+    Discover hidden treasures and exciting items nearby.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16006,6 +16001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505f8f6d6f2f0cb468a07d9ab8074f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialOverlay: {fileID: 1960488613}
 --- !u!1 &829781823
 GameObject:
   m_ObjectHideFlags: 0
@@ -16258,7 +16254,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -108}
-  m_SizeDelta: {x: -60, y: 650}
+  m_SizeDelta: {x: -60, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &841707959
 MonoBehaviour:
@@ -21179,7 +21175,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1093991223}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2065320750}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1208139325}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1093991223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25071,7 +25091,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1208139325}
+      - m_Target: {fileID: 2065320750}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -25081,7 +25101,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1308716346
 MonoBehaviour:
@@ -38266,8 +38286,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 253.00005}
-  m_SizeDelta: {x: 600, y: 80}
+  m_AnchoredPosition: {x: 0, y: 163}
+  m_SizeDelta: {x: 600, y: 71.3245}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1964945997
 MonoBehaviour:
