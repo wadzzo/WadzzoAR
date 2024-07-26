@@ -140,7 +140,8 @@ public class AuthManager : MonoBehaviour
     // public static string BASE_URL = "https://admin.action-token.com/";
 
     #if UNITY_EDITOR
-        public static string BASE_URL = "http://localhost:3000/";
+        // public static string BASE_URL = "http://localhost:3000/";
+        public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
     #else
         public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
     #endif

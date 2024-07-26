@@ -73,6 +73,10 @@ public class TutorialHelpButtonManager : MonoBehaviour
         tutorialImage.gameObject.SetActive(true);
     }
 
+    public void ARPanelHelpButton() {
+        changeTutorialText("AR", "Use our AR technology to spot virtual items in the real world and add them to your collection..");
+        // tutorialImage.gameObject.SetActive(true);
+    }
 
 
 }
