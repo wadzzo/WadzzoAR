@@ -197,6 +197,7 @@ public class TutorialManager : MonoBehaviour
         // flag to show tutorial
         PlayerPrefs.SetInt("TutorialSkipped", 0);
         PlayerPrefs.SetInt("CollectionTutorial", 0);
+        PlayerPrefs.SetInt("SearchTutorial", 0);
         PlayerPrefs.Save(); // Ensure the change is saved immediately
         // Start();
         SceneManager.LoadScene("Map");

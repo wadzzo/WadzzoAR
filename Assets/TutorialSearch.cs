@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
-public class TutorialCollections : MonoBehaviour
+public class TutorialSearch : MonoBehaviour
 {
 
     public Image overlay;
@@ -14,16 +16,16 @@ public class TutorialCollections : MonoBehaviour
     public GameObject tutorialBoxPrefab;
     public Image buttons;
 
-    public Image itemCard;
 
-    public Image popup;
+
     int currentStep = 0;
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
 
-    private TutorialStep collectionStep1 = new TutorialStep("MY COLLECTION", "To see all collected items, you can scroll up and down while in the My Collection tab");
-    private TutorialStep collectionStep2 = new TutorialStep("MY COLLECTION", "Press the View button on any item in your collection to view the details of it.");
-    private TutorialStep collectionClaimButtonStep = new TutorialStep("MY COLLECTION", "After you’ve pressed view on your selected pin, you will be able to see details about it including the brand that placed it, date of collection, more information about the item, the Claim button to learn more about your pin, collection limit on the item, and more.");
-    private TutorialStep collectionLeftRightStep = new TutorialStep("MY COLLECTION", "To switch between different collected pins you may also press the View button on an item, then use the arrow buttons below to switch between them.");
+    private TutorialStep overViewStep = new TutorialStep("BRANDS", "Here is our Search menu. This allows users to discover, follow, and interact with various brands on the platform. Use this menu to stay connected with your favorite brands, and discover new ones.");
+    private TutorialStep searchStep = new TutorialStep("BRANDS", "Use the search bar to look for any brand on the platform by typing in the brand name in the search bar, then pressing the search icon. You may also view all available brands by scrolling up and down through the Available Brands list");
+    private TutorialStep switchModeButtonStep = new TutorialStep("BRANDS", "Switch between General Mode and Follow Mode using the mode buttons on the Search menu. General Mode will allow you to view and explore all available brands and items on the Wadzzo map, or Follow Mode will allow you to only see items on the map that are placed by your followed brands. Your default selected mode is General Mode.");
+    private TutorialStep followUnfollowStep = new TutorialStep("BRANDS", "To follow a brand, press the + next to the brand name. To unfollow a brand, press the X next to the brand name.");
+    private TutorialStep followedBrandStep = new TutorialStep("BRANDS", "To view all of your followed brands, click on Followed Brands under the Brands menu. Click on Available Brands to view all brands on Wadzzo.");
 
 
 
@@ -67,10 +69,11 @@ public class TutorialCollections : MonoBehaviour
             parent.gameObject.SetActive(true);
             overlay.gameObject.SetActive(true);
 
-            tutorialSteps.Add(collectionStep1);
-            tutorialSteps.Add(collectionStep2);
-            tutorialSteps.Add(collectionClaimButtonStep);
-            tutorialSteps.Add(collectionLeftRightStep);
+            tutorialSteps.Add(overViewStep);
+            tutorialSteps.Add(searchStep);
+            tutorialSteps.Add(switchModeButtonStep);
+            tutorialSteps.Add(followUnfollowStep);
+            tutorialSteps.Add(followedBrandStep);
 
             changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
 
@@ -95,31 +98,22 @@ public class TutorialCollections : MonoBehaviour
         {
             // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
 
-            if (currentStep == 0)
-            {
-                // PlayerPrefs.SetInt("CollectionTutorial", 1);
-                // PlayerPrefs.Save(); // Ensure the change is saved immediately
-                // EndTutorial();
-                textBoxChangePosition(-400f);
-                // disactived the buttons
-                buttons.gameObject.SetActive(false);
-                currentStep++;
-                return;
-            }
+            // if (currentStep == 0)
+            // {
 
-            if (currentStep == 1)
-            {
-                // reactivate the buttons
-                // buttons.gameObject.SetActive(true);
-                itemCard.gameObject.SetActive(false);
-                // tutorialBoxPrefab.SetActive(false);
-                textBoxChangePosition(+800f);
-                popup.gameObject.SetActive(true);
-                buttons.gameObject.SetActive(true);
-            }
+            //     textBoxChangePosition(-400f);
+            //     buttons.gameObject.SetActive(false);
+            //     currentStep++;
+            //     return;
+            // }
+
+            // if (currentStep == 1)
+            // {
+            //     textBoxChangePosition(+800f);
+            //     buttons.gameObject.SetActive(true);
+            // }
 
             currentStep++;
-            // menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
 
         }
@@ -138,7 +132,7 @@ public class TutorialCollections : MonoBehaviour
 
     public void SkipTutorial()
     {
-        PlayerPrefs.SetInt("CollectionTutorial", 1);
+        PlayerPrefs.SetInt("SearchTutorial", 1);
         PlayerPrefs.Save(); // Ensure the change is saved immediately
         EndTutorial();
     }
@@ -152,7 +146,7 @@ public class TutorialCollections : MonoBehaviour
     public bool ShouldShowTutorial()
     {
         // Check if the "TutorialSkipped" flag is set in PlayerPrefs
-        return PlayerPrefs.GetInt("CollectionTutorial", 0) == 0;
+        return PlayerPrefs.GetInt("SearchTutorial", 0) == 0;
     }
 
 
@@ -184,8 +178,4 @@ public class TutorialCollections : MonoBehaviour
         // Your existing code for handling the "Next" button click
         // ...
     }
-
-
 }
-
-
