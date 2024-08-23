@@ -12,17 +12,7 @@ public class TutorialManager : MonoBehaviour
     int currentStep = 0;
     public GameObject tutorialBoxPrefab;
 
-    public class TutorialStep
-    {
-        public string Title { get; set; }
-        public string Body { get; set; }
 
-        public TutorialStep(string title, string body)
-        {
-            Title = title;
-            Body = body;
-        }
-    }
 
 
     // add public image overlay
@@ -112,7 +102,7 @@ public class TutorialManager : MonoBehaviour
     {
         // Debug.Log("Tutorial Manager Start", overlay);
         // overlay.gameObject.SetActive(true);
-     
+
         if (ShouldShowTutorial())
         {
             Debug.Log("Showing Tutorial");
@@ -134,7 +124,7 @@ public class TutorialManager : MonoBehaviour
 
 
             // focusButtons[0].GetComponent<MenuButton>().SelectButton();
-          
+
         }
         else
         {
@@ -149,6 +139,7 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Tutorial Manager Update");
 
     }
 
@@ -196,6 +187,7 @@ public class TutorialManager : MonoBehaviour
     public void EndTutorial()
     {
         overlay.gameObject.SetActive(false);
+        homeOverlay.gameObject.SetActive(false);
     }
 
 
@@ -204,6 +196,7 @@ public class TutorialManager : MonoBehaviour
         ConsoleManager.instance.ShowMessage("The tutorial has been reset.");
         // flag to show tutorial
         PlayerPrefs.SetInt("TutorialSkipped", 0);
+        PlayerPrefs.SetInt("CollectionTutorial", 0);
         PlayerPrefs.Save(); // Ensure the change is saved immediately
         // Start();
         SceneManager.LoadScene("Map");
@@ -211,4 +204,17 @@ public class TutorialManager : MonoBehaviour
     }
 
 
+}
+
+
+public class TutorialStep
+{
+    public string Title { get; set; }
+    public string Body { get; set; }
+
+    public TutorialStep(string title, string body)
+    {
+        Title = title;
+        Body = body;
+    }
 }
