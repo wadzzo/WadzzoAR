@@ -8,7 +8,7 @@ using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
-    public Button[] menuButtons;
+    public Button[] focusButtons;
     int currentStep = 0;
     public GameObject tutorialBoxPrefab;
 
@@ -27,11 +27,10 @@ public class TutorialManager : MonoBehaviour
 
     // add public image overlay
     public Image overlay;
+    public Image homeOverlay;
+
 
     // Array of header and body text for each tutorial step . and make a class for each tutorial step
-
-    public Button nextButton;
-    public Button skipButton;
 
 
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
@@ -48,13 +47,16 @@ public class TutorialManager : MonoBehaviour
     // add this to the array
 
 
-    private TutorialStep mapStep = new TutorialStep("Map", "Embark on an adventure! The map is your gateway to exploring the world. Discover hidden treasures and exciting items nearby.");
-    private TutorialStep collectionStep = new TutorialStep("My Collection", "Find all your collected items here. Claim your rewards and bring them to life with our AR technology.");
+    private TutorialStep mapStep1 = new TutorialStep("Map", "Welcome to the Wadzzo app! This tutorial will show you how to use Wadzzo to find pins around you, follow your favorite brands, and collect rewards.");
+    private TutorialStep mapStep2 = new TutorialStep("Map", "To begin, let’s look at your map! From your map you will be able to find where items are located in your surroundings that you can capture, how to earn Wadzzo, and how many Wadzzo you have.");
+    private TutorialStep mapStep3 = new TutorialStep("Map", "To locate what rewards can be found around your location, you can zoom in and zoom out to view the map around you, or swipe around. You can click on pins that appear on your map to see pin details, such as how many are available to collect, what the item itself is, and the brand offering the item.");
+    private TutorialStep mapStep4 = new TutorialStep("Map", "To collect an item, you will need to be at the physical location shown on your Wadzzo map. Once you are close enough to the available item, automatic collection items are added straight to your My Collection tab. A celebratory Wadzzo Burst will appear on screen when you have collected your item from the Wadzzo app. Automatic collection items can be identified due to their square icon shape on the map.");
+    private TutorialStep ARStep = new TutorialStep("AR", "Manual collect pins are identified by their circular shape on the map. To collect them, you will need to press the AR button on your map to show your real life surroundings at the location. Look around with your device until you locate an icon on your screen. Click the claim button once it appears under the item found in AR, which will then add it to your collection.");
+    private TutorialStep PinStep = new TutorialStep("PIN", "When looking for new items, uncollected items will appear green on your map, and will turn yellow after you’ve collected them.");
     private TutorialStep searchStep = new TutorialStep("Search", "Search for brands to follow and view your followed brands.");
     private TutorialStep myAccountStep = new TutorialStep("My Account", "Access and manage your personal information, including email and password.");
     private TutorialStep settingsStep = new TutorialStep("Settings", "Manage your data, find our website, or delete your account. It's all just a tap away.");
-    private TutorialStep reCenterStep = new TutorialStep("Re-center", "Tap the Re-center button to bring your location back to the center of the map.");
-    private TutorialStep ARStep = new TutorialStep("AR", "Use our AR technology to spot virtual items in the real world and add them to your collection.");
+    private TutorialStep reCenterStep = new TutorialStep("Re-center", "Press the Re-center button to center your map view to your current location");
 
 
 
@@ -108,33 +110,38 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
-
-
-
-        Debug.Log("Tutorial Manager Start");
+        // Debug.Log("Tutorial Manager Start", overlay);
+        // overlay.gameObject.SetActive(true);
+     
         if (ShouldShowTutorial())
         {
             Debug.Log("Showing Tutorial");
             overlay.gameObject.SetActive(true);
-            tutorialSteps.Add(mapStep);
-            tutorialSteps.Add(collectionStep);
-            tutorialSteps.Add(searchStep);
-            tutorialSteps.Add(myAccountStep);
-            tutorialSteps.Add(settingsStep);
+            homeOverlay.gameObject.SetActive(true);
+            tutorialSteps.Add(mapStep1);
+            tutorialSteps.Add(mapStep2);
+            tutorialSteps.Add(mapStep3);
+            tutorialSteps.Add(mapStep4);
+
+            // tutorialSteps.Add(collectionStep);
+            // tutorialSteps.Add(searchStep);
+            // tutorialSteps.Add(myAccountStep);
+            // tutorialSteps.Add(settingsStep);
             tutorialSteps.Add(reCenterStep);
             tutorialSteps.Add(ARStep);
 
             changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
 
 
-            menuButtons[0].GetComponent<MenuButton>().SelectButton();
-            // nextButton.onClick.AddListener(Next);
-            // skipButton.onClick.AddListener(Previous);
+            // focusButtons[0].GetComponent<MenuButton>().SelectButton();
+          
         }
         else
         {
             Debug.Log("Disabling Tutorial Overlay");
+            homeOverlay.gameObject.SetActive(false);
             overlay.gameObject.SetActive(false);
+
         }
 
     }
@@ -148,11 +155,12 @@ public class TutorialManager : MonoBehaviour
 
     public void Next()
     {
-        if (currentStep < menuButtons.Length - 1)
+        if (currentStep < tutorialSteps.Count - 1)
         {
-            menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+
             currentStep++;
-            menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
+            // menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
 
         }
@@ -162,9 +170,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentStep > 0)
         {
-            menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            // focusButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
             currentStep--;
-            menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
+            // focusButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
     }

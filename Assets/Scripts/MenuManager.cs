@@ -34,7 +34,11 @@ public class MenuManager : MonoBehaviour
     }
 
     public void SelectScreen(int index)
+
+
     {
+        
+
         foreach (Button button in menuButtons)
         {
             button.GetComponent<MenuButton>().DeSelectButton();
@@ -69,6 +73,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadScene(int index)
     {
+
         SceneManager.LoadScene(index);
     }
 
