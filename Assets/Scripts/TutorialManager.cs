@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
     public Button[] focusButtons;
     int currentStep = 0;
     public GameObject tutorialBoxPrefab;
+    private float initialYPosition;
 
 
 
@@ -104,8 +105,24 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
-        // Debug.Log("Tutorial Manager Start", overlay);
-        // overlay.gameObject.SetActive(true);
+        if (tutorialBoxPrefab != null)
+        {
+            RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                initialYPosition = rectTransform.anchoredPosition.y;
+            }
+            else
+            {
+                Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
+            }
+        }
+
+
+        else
+        {
+            Debug.LogError("Tutorial Box Prefab is not assigned.");
+        }
 
         if (ShouldShowTutorial())
         {
@@ -125,6 +142,7 @@ public class TutorialManager : MonoBehaviour
             tutorialSteps.Add(ARStep);
 
             changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
+            ApplyStateChange(0);
 
 
             // focusButtons[0].GetComponent<MenuButton>().SelectButton();
@@ -152,36 +170,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentStep < tutorialSteps.Count - 1)
         {
-            // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
-            if (currentStep == 0)
-            {
-                textBoxChangePosition(-300f);
-
-            }
-            if (currentStep == 1)
-            {
-                pin.gameObject.SetActive(true);
-                // textBoxChangePosition(-400f);
-            }
-            // skipping one
-
-            if (currentStep == 3)
-            {
-                textBoxChangePosition(+600);
-                pin.gameObject.SetActive(false);
-                recenter.gameObject.SetActive(true);
-            }
-
-            if (currentStep == 4)
-            {
-                recenter.gameObject.SetActive(false);
-                Ar.gameObject.SetActive(true);
-            }
-
+            ApplyStateChange(currentStep + 1);
             currentStep++;
-            // menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
-
         }
     }
 
@@ -189,12 +180,59 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentStep > 0)
         {
-            // focusButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            ApplyStateChange(currentStep - 1);
             currentStep--;
-            // focusButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
     }
+
+    private void ApplyStateChange(int step)
+    {
+        switch (step)
+        {
+            case 0: // Step 0
+                // Do something for step 0
+                textBoxChangePosition();
+                pin.gameObject.SetActive(false);
+                Ar.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(false);
+
+                break;
+            case 1: // Step 1
+                textBoxChangePosition(-300f);
+                pin.gameObject.SetActive(false);
+                Ar.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(false);
+                break;
+            case 2: // Step 2
+                textBoxChangePosition(-300f);
+                pin.gameObject.SetActive(true);
+                Ar.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(false);
+                break;
+            case 3:
+                textBoxChangePosition(-300f);
+                pin.gameObject.SetActive(true);
+                Ar.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(false);
+                break;
+            case 4: // Step 3
+                textBoxChangePosition(600f);
+                pin.gameObject.SetActive(false);
+                Ar.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(true);
+                break;
+            case 5: // Step 4
+                pin.gameObject.SetActive(false);
+                Ar.gameObject.SetActive(true);
+                recenter.gameObject.SetActive(false);
+                break;
+                // add more cases if needed for other steps
+        }
+    }
+
+
+
 
     public void SkipTutorial()
     {
@@ -232,7 +270,9 @@ public class TutorialManager : MonoBehaviour
 
     }
 
-    public void textBoxChangePosition(float value)
+
+
+    public void textBoxChangePosition(float? value = null)
     {
         // Check if the tutorialBoxPrefab is assigned
         if (tutorialBoxPrefab == null)
@@ -251,15 +291,19 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        // Change the y position (for example, increase by 50 units)
-        float newYPosition = rectTransform.anchoredPosition.y + value;
-
-        // Update the anchored position of the RectTransform
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
-
-        // Your existing code for handling the "Next" button click
-        // ...
+        if (value.HasValue)
+        {
+            // Set the new Y position by adding the provided value to the initial Y position
+            float newYPosition = initialYPosition + value.Value;
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
+        }
+        else
+        {
+            // Reset to initial position
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, initialYPosition);
+        }
     }
+
 
 
 }
