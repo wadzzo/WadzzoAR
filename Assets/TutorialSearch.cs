@@ -1,22 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class TutorialSearch : MonoBehaviour
 {
-
     public Image overlay;
     public Image parent;
     public GameObject tutorialBoxPrefab;
+    private float initialYPosition;
     public Image buttons;
-
-
+    public GameObject brands;
+    public GameObject searchbar;
+    public GameObject brandItems;
+    public Image mode;
 
     int currentStep = 0;
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
@@ -27,25 +25,21 @@ public class TutorialSearch : MonoBehaviour
     private TutorialStep followUnfollowStep = new TutorialStep("BRANDS", "To follow a brand, press the + next to the brand name. To unfollow a brand, press the X next to the brand name.");
     private TutorialStep followedBrandStep = new TutorialStep("BRANDS", "To view all of your followed brands, click on Followed Brands under the Brands menu. Click on Available Brands to view all brands on Wadzzo.");
 
-
-
     private void changeTutorialText(string header, string body)
     {
         TMP_Text[] textComponents = tutorialBoxPrefab.GetComponentsInChildren<TMP_Text>();
 
-        // Assuming the first one is always headerText and the second one is always bodyText
-        // This assumption might need to be adjusted based on your actual prefab structure
         TMP_Text headerTextComponent = null;
         TMP_Text bodyTextComponent = null;
 
         foreach (var textComponent in textComponents)
         {
             if (textComponent.gameObject.name == "header")
-            { // Assuming the header text game object is named "HeaderText"
+            {
                 headerTextComponent = textComponent;
             }
             else if (textComponent.gameObject.name == "TutorialContent")
-            { // Assuming the body text game object is named "BodyText"
+            {
                 bodyTextComponent = textComponent;
             }
         }
@@ -61,9 +55,25 @@ public class TutorialSearch : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        if (tutorialBoxPrefab != null)
+        {
+            RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                initialYPosition = rectTransform.anchoredPosition.y;
+            }
+            else
+            {
+                Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Tutorial Box Prefab is not assigned.");
+        }
+
         if (ShouldShowTutorial())
         {
             parent.gameObject.SetActive(true);
@@ -76,17 +86,15 @@ public class TutorialSearch : MonoBehaviour
             tutorialSteps.Add(followedBrandStep);
 
             changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
-
+            ApplyStateChange(0);
         }
         else
         {
             overlay.gameObject.SetActive(false);
             parent.gameObject.SetActive(false);
         }
-
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -96,26 +104,9 @@ public class TutorialSearch : MonoBehaviour
     {
         if (currentStep < tutorialSteps.Count - 1)
         {
-            // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
-
-            // if (currentStep == 0)
-            // {
-
-            //     textBoxChangePosition(-400f);
-            //     buttons.gameObject.SetActive(false);
-            //     currentStep++;
-            //     return;
-            // }
-
-            // if (currentStep == 1)
-            // {
-            //     textBoxChangePosition(+800f);
-            //     buttons.gameObject.SetActive(true);
-            // }
-
+            ApplyStateChange(currentStep + 1);
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
-
         }
     }
 
@@ -123,10 +114,57 @@ public class TutorialSearch : MonoBehaviour
     {
         if (currentStep > 0)
         {
-            // focusButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            ApplyStateChange(currentStep - 1);
             currentStep--;
-            // focusButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+        }
+    }
+
+    private void ApplyStateChange(int step)
+    {
+        switch (step)
+        {
+            case 0:
+                textBoxChangePosition();
+                buttons.gameObject.SetActive(true);
+                brands.SetActive(true);
+                searchbar.SetActive(false);
+                brandItems.SetActive(false);
+                mode.gameObject.SetActive(false);
+                break;
+            case 1:
+                textBoxChangePosition(-400f);
+                buttons.gameObject.SetActive(true);
+                brands.SetActive(false);
+                searchbar.SetActive(true);
+                brandItems.SetActive(true);
+                mode.gameObject.SetActive(false);
+                break;
+            case 2:
+                textBoxChangePosition(-400f);
+                buttons.gameObject.SetActive(true);
+                brands.SetActive(false);
+                searchbar.SetActive(true);
+                brandItems.SetActive(false);
+                mode.gameObject.SetActive(true);
+                break;
+            case 3:
+                textBoxChangePosition(-200f);
+                buttons.gameObject.SetActive(true);
+                brands.SetActive(false);
+                searchbar.SetActive(true);
+                brandItems.SetActive(true);
+                mode.gameObject.SetActive(true);
+                break;
+            case 4:
+                textBoxChangePosition(0);
+                buttons.gameObject.SetActive(true);
+                brands.SetActive(false);
+                searchbar.SetActive(false);
+                brandItems.SetActive(true);
+                mode.gameObject.SetActive(true);
+                break;
+                // Add more cases if needed
         }
     }
 
@@ -145,37 +183,33 @@ public class TutorialSearch : MonoBehaviour
 
     public bool ShouldShowTutorial()
     {
-        // Check if the "TutorialSkipped" flag is set in PlayerPrefs
         return PlayerPrefs.GetInt("SearchTutorial", 0) == 0;
     }
 
-
-    public void textBoxChangePosition(float value)
+    public void textBoxChangePosition(float? value = null)
     {
-        // Check if the tutorialBoxPrefab is assigned
         if (tutorialBoxPrefab == null)
         {
             Debug.LogError("Tutorial Box Prefab is not assigned.");
             return;
         }
 
-        // Get the RectTransform component of the tutorialBoxPrefab
         RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
 
-        // Check if the RectTransform component is found
         if (rectTransform == null)
         {
             Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
             return;
         }
 
-        // Change the y position (for example, increase by 50 units)
-        float newYPosition = rectTransform.anchoredPosition.y + value;
-
-        // Update the anchored position of the RectTransform
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
-
-        // Your existing code for handling the "Next" button click
-        // ...
+        if (value.HasValue)
+        {
+            float newYPosition = initialYPosition + value.Value;
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
+        }
+        else
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, initialYPosition);
+        }
     }
 }
