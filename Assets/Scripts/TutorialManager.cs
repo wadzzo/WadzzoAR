@@ -33,8 +33,11 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep mapStep1 = new TutorialStep("Map", "Welcome to the Wadzzo app! This tutorial will show you how to use Wadzzo to find pins around you, follow your favorite brands, and collect rewards.");
     private TutorialStep mapStep2 = new TutorialStep("Map", "To begin, let’s look at your map! From your map you will be able to find where items are located in your surroundings that you can capture, how to earn Wadzzo, and how many Wadzzo you have.");
     private TutorialStep mapStep3 = new TutorialStep("Map", "To locate what rewards can be found around your location, you can zoom in and zoom out to view the map around you, or swipe around. You can click on pins that appear on your map to see pin details, such as how many are available to collect, what the item itself is, and the brand offering the item.");
-    private TutorialStep mapStep4 = new TutorialStep("Map", "To collect an item, you will need to be at the physical location shown on your Wadzzo map. Once you are close enough to the available item, automatic collection items are added straight to your My Collection tab. A celebratory Wadzzo Burst will appear on screen when you have collected your item from the Wadzzo app. Automatic collection items can be identified due to their square icon shape on the map.");
-    private TutorialStep ARStep = new TutorialStep("AR", "Manual collect pins are identified by their circular shape on the map. To collect them, you will need to press the AR button on your map to show your real life surroundings at the location. Look around with your device until you locate an icon on your screen. Click the claim button once it appears under the item found in AR, which will then add it to your collection.");
+    private TutorialStep mapStep4 = new TutorialStep("Map", "To collect an item, go to its location on the Wadzzo map. When close, items are auto-added to your collection, and a Wadzzo Burst will celebrate.");
+
+    private TutorialStep ARStep = new TutorialStep("AR", "Manual collect pins are circular on the map. Press AR, locate the icon, and click claim to add it to your collection.");
+    // private TutorialStep mapStep4 = new TutorialStep("Map", "To collect an item, you will need to be at the physical location shown on your Wadzzo map. Once you are close enough to the available item, automatic collection items are added straight to your My Collection tab. A celebratory Wadzzo Burst will appear on screen when you have collected your item from the Wadzzo app.");
+    // private TutorialStep ARStep = new TutorialStep("AR", "Manual collect pins are identified by their circular shape on the map. To collect them, you will need to press the AR button on your map to show your real life surroundings at the location. Look around with your device until you locate an icon on your screen. Click the claim button once it appears under the item found in AR, which will then add it to your collection.");
     private TutorialStep reCenterStep = new TutorialStep("Re-center", "Press the Re-center button to center your map view to your current location");
 
 
@@ -128,7 +131,8 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Tutorial Manager Update");
+        // Debug.Log("Tutorial Manager Update");
+        // if (currentStep == )
 
     }
 
@@ -141,6 +145,14 @@ public class TutorialManager : MonoBehaviour
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
+
+
+
+        else if (currentStep == tutorialSteps.Count - 1)
+        {
+            EndTutorial();
+        }
+
     }
 
     public void Previous()
@@ -184,12 +196,14 @@ public class TutorialManager : MonoBehaviour
                 recenter.gameObject.SetActive(false);
                 break;
             case 4: // Step 3
-                textBoxChangePosition(600f);
+                // textBoxChangePosition(600f);
+                textBoxChangePosition();
                 pin.gameObject.SetActive(false);
                 Ar.gameObject.SetActive(false);
                 recenter.gameObject.SetActive(true);
                 break;
             case 5: // Step 4
+                textBoxChangePosition();
                 pin.gameObject.SetActive(false);
                 Ar.gameObject.SetActive(true);
                 recenter.gameObject.SetActive(false);

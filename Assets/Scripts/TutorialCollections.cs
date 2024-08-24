@@ -14,12 +14,14 @@ public class TutorialCollections : MonoBehaviour
     public Image buttons;
     public Image itemCard;
     public Image popup;
+    public GameObject claim;
+    public GameObject arrows;
     int currentStep = 0;
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
 
     private TutorialStep collectionStep1 = new TutorialStep("MY COLLECTION", "To see all collected items, you can scroll up and down while in the My Collection tab");
     private TutorialStep collectionStep2 = new TutorialStep("MY COLLECTION", "Press the View button on any item in your collection to view the details of it.");
-    private TutorialStep collectionClaimButtonStep = new TutorialStep("MY COLLECTION", "After you’ve pressed view on your selected pin, you will be able to see details about it including the brand that placed it, date of collection, more information about the item, the Claim button to learn more about your pin, collection limit on the item, and more.");
+    private TutorialStep collectionClaimButtonStep = new TutorialStep("MY COLLECTION", "Clicking on view will enable you to see details about it including brand details and more information about the item.");
     private TutorialStep collectionLeftRightStep = new TutorialStep("MY COLLECTION", "To switch between different collected pins you may also press the View button on an item, then use the arrow buttons below to switch between them.");
 
     private void changeTutorialText(string header, string body)
@@ -105,6 +107,11 @@ public class TutorialCollections : MonoBehaviour
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
+
+        else if (currentStep == tutorialSteps.Count - 1)
+        {
+            EndTutorial();
+        }
     }
 
     public void Previous()
@@ -122,28 +129,36 @@ public class TutorialCollections : MonoBehaviour
         switch (step)
         {
             case 0:
-                textBoxChangePosition();
+                textBoxChangePosition(-300f);
                 buttons.gameObject.SetActive(true);
                 itemCard.gameObject.SetActive(true);
                 popup.gameObject.SetActive(false);
+                claim.SetActive(false);
+                arrows.SetActive(false);
                 break;
             case 1:
-                textBoxChangePosition(-400f);
+                textBoxChangePosition(400f);
                 buttons.gameObject.SetActive(true);
                 itemCard.gameObject.SetActive(true);
                 popup.gameObject.SetActive(false);
+                claim.SetActive(false);
+                arrows.SetActive(false);
                 break;
             case 2:
-                textBoxChangePosition(800f);
+                textBoxChangePosition(400);
                 buttons.gameObject.SetActive(true);
                 itemCard.gameObject.SetActive(false);
                 popup.gameObject.SetActive(true);
+                claim.SetActive(true);
+                arrows.SetActive(false);
                 break;
             case 3:
                 textBoxChangePosition(0);
                 buttons.gameObject.SetActive(true);
                 itemCard.gameObject.SetActive(false);
                 popup.gameObject.SetActive(true);
+                claim.SetActive(false);
+                arrows.SetActive(true);
                 break;
                 // Add more cases if needed
         }

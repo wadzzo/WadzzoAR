@@ -10,7 +10,7 @@ public class TutorialSearch : MonoBehaviour
     public Image parent;
     public GameObject tutorialBoxPrefab;
     private float initialYPosition;
-    public Image buttons;
+    // public Image buttons;
     public GameObject brands;
     public GameObject searchbar;
     public GameObject brandItems;
@@ -108,6 +108,10 @@ public class TutorialSearch : MonoBehaviour
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
         }
+        else if (currentStep == tutorialSteps.Count - 1)
+        {
+            EndTutorial();
+        }
     }
 
     public void Previous()
@@ -126,43 +130,38 @@ public class TutorialSearch : MonoBehaviour
         {
             case 0:
                 textBoxChangePosition();
-                buttons.gameObject.SetActive(true);
-                brands.SetActive(true);
+                brands.SetActive(false);
                 searchbar.SetActive(false);
                 brandItems.SetActive(false);
                 mode.gameObject.SetActive(false);
                 break;
             case 1:
-                textBoxChangePosition(-400f);
-                buttons.gameObject.SetActive(true);
+                // textBoxChangePosition(-400f);
                 brands.SetActive(false);
                 searchbar.SetActive(true);
-                brandItems.SetActive(true);
+                brandItems.SetActive(false);
                 mode.gameObject.SetActive(false);
                 break;
             case 2:
-                textBoxChangePosition(-400f);
-                buttons.gameObject.SetActive(true);
+                // textBoxChangePosition(-400f);
                 brands.SetActive(false);
-                searchbar.SetActive(true);
+                searchbar.SetActive(false);
                 brandItems.SetActive(false);
                 mode.gameObject.SetActive(true);
                 break;
             case 3:
-                textBoxChangePosition(-200f);
-                buttons.gameObject.SetActive(true);
-                brands.SetActive(false);
-                searchbar.SetActive(true);
-                brandItems.SetActive(true);
-                mode.gameObject.SetActive(true);
-                break;
-            case 4:
-                textBoxChangePosition(0);
-                buttons.gameObject.SetActive(true);
+                // textBoxChangePosition(-200f);
                 brands.SetActive(false);
                 searchbar.SetActive(false);
                 brandItems.SetActive(true);
-                mode.gameObject.SetActive(true);
+                mode.gameObject.SetActive(false);
+                break;
+            case 4:
+                // textBoxChangePosition(0);
+                brands.SetActive(true);
+                searchbar.SetActive(false);
+                brandItems.SetActive(false);
+                mode.gameObject.SetActive(false);
                 break;
                 // Add more cases if needed
         }
