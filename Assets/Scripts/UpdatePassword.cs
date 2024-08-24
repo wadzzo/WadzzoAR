@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
 
 public class UpdatePassword : MonoBehaviour
 {
 
     public static LocationRoot root;
-  //  public static string base_url = "https://www.thebillboardapp.net/";
+    //  public static string base_url = "https://www.thebillboardapp.net/";
 
     //UI Gameobjects
     public InputField emailInput;
     public InputField passwordInput;
     public InputField confirmInput;
     public GameObject MyAccountPanel;
-   
+    // a textmesh pro field
+    public TMP_Text pubkey;
+    public TMP_Text name;
+    public TMP_Text email;
+
+
+
 
     public static string Token
     {
@@ -31,12 +38,16 @@ public class UpdatePassword : MonoBehaviour
 
     public void Start()
     {
+
+        name.text = AuthManager.Name;
+        pubkey.text = AuthManager.Wallet_Address;
+        email.text = AuthManager.Email;
+
         emailInput.text = AuthManager.Email;
-        confirmInput.text = AuthManager.Wallet_Address;
         Debug.Log(AuthManager.Email);
         emailInput.interactable = false;
         confirmInput.interactable = false;
-       
+
     }
 
     //test
@@ -74,7 +85,7 @@ public class UpdatePassword : MonoBehaviour
             }
         }
 
-        if (passwordInput.text  != confirmInput.text)
+        if (passwordInput.text != confirmInput.text)
         {
             GameObject erorMsg = passwordInput.transform.Find("ErorBox").gameObject;
             erorMsg.SetActive(true);

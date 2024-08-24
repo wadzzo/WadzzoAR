@@ -139,12 +139,12 @@ public class AuthManager : MonoBehaviour
 
     // public static string BASE_URL = "https://admin.action-token.com/";
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         // public static string BASE_URL = "http://localhost:3000/";
         public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
-    #else
-        public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
-    #endif
+#else
+    public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
+#endif
 
 
 
@@ -211,7 +211,7 @@ public class AuthManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL + requestName, form))
         {
 
-            www.SetRequestHeader("Cookie",  AuthManager.Token);
+            www.SetRequestHeader("Cookie", AuthManager.Token);
 
             yield return www.SendWebRequest();
             ConsumeLocation Result1 = JsonUtility.FromJson<ConsumeLocation>(www.downloadHandler.text);
@@ -434,7 +434,8 @@ public class AuthManager : MonoBehaviour
                 {
                     Debug.Log("Error found in the response");
                 }
-                if(data.Contains("wrong-password")) {
+                if (data.Contains("wrong-password"))
+                {
                     Debug.Log("wrong password");
                 }
 
@@ -443,17 +444,17 @@ public class AuthManager : MonoBehaviour
                     ConsoleManager.instance.ShowMessage("Network Error");
                 }
 
-                if(data.Contains("user-not-found"))
+                if (data.Contains("user-not-found"))
                 {
                     ConsoleManager.instance.ShowMessage("User not found! Please Sign Up");
                 }
-                else if(data.Contains("temporarily"))
+                else if (data.Contains("temporarily"))
                 {
                     ConsoleManager.instance.ShowMessage("Too many request: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.");
                 }
                 else
                 {
-                    
+
                     GameObject erorMsg = InputUIManager.instance.s_emailInput.transform.Find("ErorBox").gameObject;
                     GameObject erorMsg1 = InputUIManager.instance.s_passwordInput.transform.Find("ErorBox").gameObject;
                     erorMsg.SetActive(true);
