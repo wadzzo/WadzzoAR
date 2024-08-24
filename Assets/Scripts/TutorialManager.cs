@@ -18,6 +18,9 @@ public class TutorialManager : MonoBehaviour
     // add public image overlay
     public Image overlay;
     public Image homeOverlay;
+    public Image pin;
+    public Image recenter;
+    public Image Ar;
 
 
     // Array of header and body text for each tutorial step . and make a class for each tutorial step
@@ -85,6 +88,7 @@ public class TutorialManager : MonoBehaviour
             else if (textComponent.gameObject.name == "TutorialContent")
             { // Assuming the body text game object is named "BodyText"
                 bodyTextComponent = textComponent;
+
             }
         }
 
@@ -149,6 +153,30 @@ public class TutorialManager : MonoBehaviour
         if (currentStep < tutorialSteps.Count - 1)
         {
             // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            if (currentStep == 0)
+            {
+                textBoxChangePosition(-300f);
+
+            }
+            if (currentStep == 1)
+            {
+                pin.gameObject.SetActive(true);
+                // textBoxChangePosition(-400f);
+            }
+            // skipping one
+
+            if (currentStep == 3)
+            {
+                textBoxChangePosition(+600);
+                pin.gameObject.SetActive(false);
+                recenter.gameObject.SetActive(true);
+            }
+
+            if (currentStep == 4)
+            {
+                recenter.gameObject.SetActive(false);
+                Ar.gameObject.SetActive(true);
+            }
 
             currentStep++;
             // menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
@@ -202,6 +230,35 @@ public class TutorialManager : MonoBehaviour
         // Start();
         SceneManager.LoadScene("Map");
 
+    }
+
+    public void textBoxChangePosition(float value)
+    {
+        // Check if the tutorialBoxPrefab is assigned
+        if (tutorialBoxPrefab == null)
+        {
+            Debug.LogError("Tutorial Box Prefab is not assigned.");
+            return;
+        }
+
+        // Get the RectTransform component of the tutorialBoxPrefab
+        RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
+
+        // Check if the RectTransform component is found
+        if (rectTransform == null)
+        {
+            Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
+            return;
+        }
+
+        // Change the y position (for example, increase by 50 units)
+        float newYPosition = rectTransform.anchoredPosition.y + value;
+
+        // Update the anchored position of the RectTransform
+        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
+
+        // Your existing code for handling the "Next" button click
+        // ...
     }
 
 
