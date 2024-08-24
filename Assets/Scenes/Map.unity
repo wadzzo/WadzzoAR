@@ -12896,7 +12896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &520604153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34801,7 +34801,6 @@ GameObject:
   - component: {fileID: 1371528115}
   - component: {fileID: 1371528114}
   - component: {fileID: 1371528113}
-  - component: {fileID: 1371528112}
   m_Layer: 5
   m_Name: MapReset Btn Selected
   m_TagString: Untagged
@@ -34829,21 +34828,6 @@ RectTransform:
   m_AnchoredPosition: {x: 148.09872, y: 0.000061035156}
   m_SizeDelta: {x: 296.1975, y: 100}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1371528112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371528110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feddc07ad57994324a3ad7c3c8a0148c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  selectedSprite: {fileID: 21300000, guid: caf41423d345e314fa58441ca680cf08, type: 3}
-  deselectedSprite: {fileID: 0}
 --- !u!114 &1371528113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54661,7 +54645,6 @@ GameObject:
   - component: {fileID: 2142699741}
   - component: {fileID: 2142699740}
   - component: {fileID: 2142699739}
-  - component: {fileID: 2142699738}
   m_Layer: 5
   m_Name: AR Locations btn selected
   m_TagString: Untagged
@@ -54689,21 +54672,6 @@ RectTransform:
   m_AnchoredPosition: {x: -57.291687, y: -57.92694}
   m_SizeDelta: {x: 114.5834, y: 115.8531}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &2142699738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142699736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feddc07ad57994324a3ad7c3c8a0148c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  selectedSprite: {fileID: 21300000, guid: 21e73a2bff2942b44ad7fc327f525c14, type: 3}
-  deselectedSprite: {fileID: 21300000, guid: da157c426a2320d4ea8d0fd053ed03d7, type: 3}
 --- !u!114 &2142699739
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,17 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
 public class TutorialCollections : MonoBehaviour
 {
-
     public Image overlay;
     public Image parent;
     public GameObject tutorialBoxPrefab;
+    private float initialYPosition;
     public Image buttons;
-
     public Image itemCard;
-
     public Image popup;
     int currentStep = 0;
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
@@ -25,25 +22,21 @@ public class TutorialCollections : MonoBehaviour
     private TutorialStep collectionClaimButtonStep = new TutorialStep("MY COLLECTION", "After you’ve pressed view on your selected pin, you will be able to see details about it including the brand that placed it, date of collection, more information about the item, the Claim button to learn more about your pin, collection limit on the item, and more.");
     private TutorialStep collectionLeftRightStep = new TutorialStep("MY COLLECTION", "To switch between different collected pins you may also press the View button on an item, then use the arrow buttons below to switch between them.");
 
-
-
     private void changeTutorialText(string header, string body)
     {
         TMP_Text[] textComponents = tutorialBoxPrefab.GetComponentsInChildren<TMP_Text>();
 
-        // Assuming the first one is always headerText and the second one is always bodyText
-        // This assumption might need to be adjusted based on your actual prefab structure
         TMP_Text headerTextComponent = null;
         TMP_Text bodyTextComponent = null;
 
         foreach (var textComponent in textComponents)
         {
             if (textComponent.gameObject.name == "header")
-            { // Assuming the header text game object is named "HeaderText"
+            {
                 headerTextComponent = textComponent;
             }
             else if (textComponent.gameObject.name == "TutorialContent")
-            { // Assuming the body text game object is named "BodyText"
+            {
                 bodyTextComponent = textComponent;
             }
         }
@@ -59,9 +52,25 @@ public class TutorialCollections : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        if (tutorialBoxPrefab != null)
+        {
+            RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                initialYPosition = rectTransform.anchoredPosition.y;
+            }
+            else
+            {
+                Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Tutorial Box Prefab is not assigned.");
+        }
+
         if (ShouldShowTutorial())
         {
             parent.gameObject.SetActive(true);
@@ -73,14 +82,13 @@ public class TutorialCollections : MonoBehaviour
             tutorialSteps.Add(collectionLeftRightStep);
 
             changeTutorialText(tutorialSteps[0].Title, tutorialSteps[0].Body);
-
+            ApplyStateChange(0);
         }
         else
         {
             overlay.gameObject.SetActive(false);
             parent.gameObject.SetActive(false);
         }
-
     }
 
     // Update is called once per frame
@@ -93,35 +101,9 @@ public class TutorialCollections : MonoBehaviour
     {
         if (currentStep < tutorialSteps.Count - 1)
         {
-            // menuButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
-
-            if (currentStep == 0)
-            {
-                // PlayerPrefs.SetInt("CollectionTutorial", 1);
-                // PlayerPrefs.Save(); // Ensure the change is saved immediately
-                // EndTutorial();
-                textBoxChangePosition(-400f);
-                // disactived the buttons
-                buttons.gameObject.SetActive(false);
-                currentStep++;
-                return;
-            }
-
-            if (currentStep == 1)
-            {
-                // reactivate the buttons
-                // buttons.gameObject.SetActive(true);
-                itemCard.gameObject.SetActive(false);
-                // tutorialBoxPrefab.SetActive(false);
-                textBoxChangePosition(+800f);
-                popup.gameObject.SetActive(true);
-                buttons.gameObject.SetActive(true);
-            }
-
+            ApplyStateChange(currentStep + 1);
             currentStep++;
-            // menuButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
-
         }
     }
 
@@ -129,10 +111,41 @@ public class TutorialCollections : MonoBehaviour
     {
         if (currentStep > 0)
         {
-            // focusButtons[currentStep].GetComponent<MenuButton>().DeSelectButton();
+            ApplyStateChange(currentStep - 1);
             currentStep--;
-            // focusButtons[currentStep].GetComponent<MenuButton>().SelectButton();
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+        }
+    }
+
+    private void ApplyStateChange(int step)
+    {
+        switch (step)
+        {
+            case 0:
+                textBoxChangePosition();
+                buttons.gameObject.SetActive(true);
+                itemCard.gameObject.SetActive(true);
+                popup.gameObject.SetActive(false);
+                break;
+            case 1:
+                textBoxChangePosition(-400f);
+                buttons.gameObject.SetActive(true);
+                itemCard.gameObject.SetActive(true);
+                popup.gameObject.SetActive(false);
+                break;
+            case 2:
+                textBoxChangePosition(800f);
+                buttons.gameObject.SetActive(true);
+                itemCard.gameObject.SetActive(false);
+                popup.gameObject.SetActive(true);
+                break;
+            case 3:
+                textBoxChangePosition(0);
+                buttons.gameObject.SetActive(true);
+                itemCard.gameObject.SetActive(false);
+                popup.gameObject.SetActive(true);
+                break;
+                // Add more cases if needed
         }
     }
 
@@ -151,41 +164,33 @@ public class TutorialCollections : MonoBehaviour
 
     public bool ShouldShowTutorial()
     {
-        // Check if the "TutorialSkipped" flag is set in PlayerPrefs
         return PlayerPrefs.GetInt("CollectionTutorial", 0) == 0;
     }
 
-
-    public void textBoxChangePosition(float value)
+    public void textBoxChangePosition(float? value = null)
     {
-        // Check if the tutorialBoxPrefab is assigned
         if (tutorialBoxPrefab == null)
         {
             Debug.LogError("Tutorial Box Prefab is not assigned.");
             return;
         }
 
-        // Get the RectTransform component of the tutorialBoxPrefab
         RectTransform rectTransform = tutorialBoxPrefab.GetComponent<RectTransform>();
 
-        // Check if the RectTransform component is found
         if (rectTransform == null)
         {
             Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
             return;
         }
 
-        // Change the y position (for example, increase by 50 units)
-        float newYPosition = rectTransform.anchoredPosition.y + value;
-
-        // Update the anchored position of the RectTransform
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
-
-        // Your existing code for handling the "Next" button click
-        // ...
+        if (value.HasValue)
+        {
+            float newYPosition = initialYPosition + value.Value;
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
+        }
+        else
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, initialYPosition);
+        }
     }
-
-
 }
-
-
