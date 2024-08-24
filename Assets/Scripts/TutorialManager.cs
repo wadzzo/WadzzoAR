@@ -88,6 +88,10 @@ public class TutorialManager : MonoBehaviour
             {
                 Debug.LogError("RectTransform component not found on tutorialBoxPrefab.");
             }
+
+
+
+            // SetFinishButtonActive(false);
         }
         else
         {
@@ -141,9 +145,18 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentStep < tutorialSteps.Count - 1)
         {
+
+
             ApplyStateChange(currentStep + 1);
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+
+            if (currentStep == tutorialSteps.Count - 1)
+            {
+                SetFinishButtonActive(true);
+            }
+
+
         }
 
 
@@ -159,6 +172,11 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentStep > 0)
         {
+            if (currentStep == tutorialSteps.Count - 1)
+            {
+                SetFinishButtonActive(false);
+            }
+
             ApplyStateChange(currentStep - 1);
             currentStep--;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
@@ -212,6 +230,30 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    private void SetFinishButtonActive(bool isActive)
+    {
+        // Get all Button components in children of tutorialBoxPrefab
+        Button[] buttons = tutorialBoxPrefab.GetComponentsInChildren<Button>(true);
+
+
+        foreach (var button in buttons)
+        {
+            Debug.Log("Button: " + button.gameObject.name);
+
+            // Get the Image component within this Button's children
+            Image buttonImage = button.GetComponentInChildren<Image>();
+
+            if (buttonImage != null && buttonImage.gameObject.name == "Finish")
+            {
+                // Set the button's active state
+                button.gameObject.SetActive(isActive);
+                return; // Exit the method once the button is found and set
+            }
+        }
+
+        Debug.LogError("Finish button not found.");
+    }
+
 
 
 
@@ -246,7 +288,7 @@ public class TutorialManager : MonoBehaviour
         PlayerPrefs.SetInt("CollectionTutorial", 0);
         PlayerPrefs.SetInt("SearchTutorial", 0);
         PlayerPrefs.Save(); // Ensure the change is saved immediately
-        // Start();
+                            // Start();
         SceneManager.LoadScene("Map");
 
     }

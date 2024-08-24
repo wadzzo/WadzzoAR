@@ -106,6 +106,11 @@ public class TutorialCollections : MonoBehaviour
             ApplyStateChange(currentStep + 1);
             currentStep++;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+
+            if (currentStep == tutorialSteps.Count - 1)
+            {
+                SetFinishButtonActive(true);
+            }
         }
 
         else if (currentStep == tutorialSteps.Count - 1)
@@ -118,9 +123,15 @@ public class TutorialCollections : MonoBehaviour
     {
         if (currentStep > 0)
         {
+            if (currentStep == tutorialSteps.Count - 1)
+            {
+                SetFinishButtonActive(false);
+            }
             ApplyStateChange(currentStep - 1);
             currentStep--;
             changeTutorialText(tutorialSteps[currentStep].Title, tutorialSteps[currentStep].Body);
+
+
         }
     }
 
@@ -207,5 +218,29 @@ public class TutorialCollections : MonoBehaviour
         {
             rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, initialYPosition);
         }
+    }
+
+    private void SetFinishButtonActive(bool isActive)
+    {
+        // Get all Button components in children of tutorialBoxPrefab
+        Button[] buttons = tutorialBoxPrefab.GetComponentsInChildren<Button>(true);
+
+
+        foreach (var button in buttons)
+        {
+            Debug.Log("Button: " + button.gameObject.name);
+
+            // Get the Image component within this Button's children
+            Image buttonImage = button.GetComponentInChildren<Image>();
+
+            if (buttonImage != null && buttonImage.gameObject.name == "Finish")
+            {
+                // Set the button's active state
+                button.gameObject.SetActive(isActive);
+                return; // Exit the method once the button is found and set
+            }
+        }
+
+        Debug.LogError("Finish button not found.");
     }
 }

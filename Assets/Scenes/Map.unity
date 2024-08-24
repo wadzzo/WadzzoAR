@@ -4548,6 +4548,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1960488616}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7514592553893367184, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -7572,7 +7600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -108
+      value: -184
       objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7585,6 +7613,34 @@ PrefabInstance:
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1208139329}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialSearch, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7514592553893367184, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -20448,6 +20504,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1214173258}
     m_Modifications:
+    - target: {fileID: 120144899528352582, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695612, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_Name
       value: TutorialBox
@@ -20534,6 +20594,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919732872780164785, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -30616,7 +30680,6 @@ MonoBehaviour:
   overlay: {fileID: 72981376}
   parent: {fileID: 1960488613}
   tutorialBoxPrefab: {fileID: 284486293}
-  buttons: {fileID: 0}
   brands: {fileID: 1767922478}
   searchbar: {fileID: 106940254}
   brandItems: {fileID: 2032250226}
@@ -39201,6 +39264,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1074878793}
     m_Modifications:
+    - target: {fileID: 120144899528352582, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695612, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_Name
       value: TutorialBox
@@ -39287,6 +39354,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919732872780164785, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -52951,6 +53022,34 @@ PrefabInstance:
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1279978334}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialCollections, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545901524832186821, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7514592553893367184, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

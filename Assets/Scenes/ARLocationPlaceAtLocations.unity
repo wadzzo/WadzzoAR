@@ -11056,6 +11056,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1503674162}
     m_Modifications:
+    - target: {fileID: 120144899528352582, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695612, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_Name
       value: TutorialBox
@@ -11142,6 +11146,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2890648072715695615, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919732872780164785, guid: 0338275c51d769948b35b02ab2f44fed, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
