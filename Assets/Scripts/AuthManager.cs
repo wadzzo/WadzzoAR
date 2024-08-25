@@ -137,13 +137,12 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    // public static string BASE_URL = "https://admin.action-token.com/";
 
 #if UNITY_EDITOR
-        // public static string BASE_URL = "http://localhost:3000/";
-        public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
+            // public static string BASE_URL = "http://localhost:3000/";
+            public static string BASE_URL = "https://app.wadzzo.com/";
 #else
-    public static string BASE_URL = "https://main.d2mvl4lfz9rh1b.amplifyapp.com/";
+    public static string BASE_URL = "https://app.wadzzo.com/";
 #endif
 
 
@@ -171,6 +170,11 @@ public class AuthManager : MonoBehaviour
     {
         Debug.Log("Login User");
         StartCoroutine(PostLoginUserRequest(email, password));
+    }
+
+    public void DeleteUserDataFn()
+    {
+        StartCoroutine(DeleteUserData());
     }
 
     public void UpdateScore(int score)
@@ -555,9 +559,6 @@ public class AuthManager : MonoBehaviour
         Debug.Log("SignOut ih");
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(1);
-
-        // LoadingManager.instance.loading.SetActive(true);
-        // StartCoroutine(SignOutRequest());
     }
 
     IEnumerator SignOutRequest()
@@ -654,6 +655,42 @@ public class AuthManager : MonoBehaviour
                     ConsoleManager.instance.ShowMessage("Account Deleted");
                     StartCoroutine(ExitApplication());
                 }
+
+            }
+        }
+    }
+
+    IEnumerator DeleteUserData()
+    {
+        WWWForm form = new WWWForm();
+
+        string requestName = "api/game/user/delete";
+        using (UnityWebRequest www = UnityWebRequest.Get(BASE_URL + requestName))
+        {
+            LoadingManager.instance.loading.SetActive(true);
+
+            www.SetRequestHeader("Authorization", "Bearer " + Token);
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+
+                ConsoleManager.instance.ShowMessage("Network Error");
+                LoadingManager.instance.loading.SetActive(false);
+                Debug.Log(www.error);
+                //Debug.Log(BASE_URL + requestName);
+            }
+            else
+            {
+                PlayerPrefs.DeleteAll();
+                LoadingManager.instance.loading.SetActive(false);
+                // deletedUserAcount deleteUserAcount = JsonUtility.FromJson<deletedUserAcount>(www.downloadHandler.text);
+                // if (deleteUserAcount.success == true)
+                // {
+                ConsoleManager.instance.ShowMessage("Account Collection Data Deleted");
+                SceneManager.LoadScene(1);
+                // StartCoroutine(ExitApplication());
+                // }
 
             }
         }
@@ -758,7 +795,7 @@ public class AuthManager : MonoBehaviour
 
     public void VisitWadzzoCom()
     {
-        Application.OpenURL("https://www.action-tokens.com/");
+        Application.OpenURL("https://www.wadzzo.com//");
     }
 
     public void VisitGallery()
@@ -778,7 +815,7 @@ public class AuthManager : MonoBehaviour
 
     public void SignUPURL()
     {
-        Application.OpenURL(AuthManager.BASE_URL + "sign-up");
+        Application.OpenURL(AuthManager.BASE_URL + "signup");
     }
 }
 
