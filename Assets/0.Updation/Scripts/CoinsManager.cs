@@ -42,8 +42,8 @@ public class CoinsManager : MonoBehaviour
     [Header("Animation settings")]
     //[SerializeField] [Range(0.5f, 0.9f)] float minAnimDuration;
     //[SerializeField] [Range(0.9f, 2f)] float maxAnimDuration;
-    [SerializeField] [Range(3.0f, 3.0f)] float minAnimDuration;
-    [SerializeField] [Range(3.7f, 4.0f)] float maxAnimDuration;
+    [SerializeField][Range(3.0f, 3.0f)] float minAnimDuration;
+    [SerializeField][Range(3.7f, 4.0f)] float maxAnimDuration;
     [SerializeField] Ease easeType;
     [SerializeField] float spread;
     [SerializeField] public GameObject centerImage;
@@ -64,8 +64,8 @@ public class CoinsManager : MonoBehaviour
     void Start()
     {
         //InstantiateObjects(maxCoins);
-        Debug.Log("show total number of coins");
-        UpdateCoinsCount();
+        // Debug.Log("show total number of coins");
+        // UpdateCoinsCount();
     }
     private void CoinText(int totalCoins)
     {
@@ -175,7 +175,7 @@ public class CoinsManager : MonoBehaviour
                 //for the first time signup the application
                 //the coins count must be zero
                 //on Signup the user will get reward of 25 coins
-                Debug.Log("Total number of coins is "+ identities.data.available_tokens);
+                Debug.Log("Total number of coins is " + identities.data.available_tokens);
                 if (AuthManager.coinAimation)// only on login ap hit
                 {
                     CoinText(identities.data.available_tokens);

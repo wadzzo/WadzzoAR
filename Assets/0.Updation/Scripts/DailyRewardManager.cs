@@ -16,10 +16,11 @@ public class DailyRewardManager : MonoBehaviour
     }
     private void Awake()
     {
-        if(instance== null)
+        if (instance == null)
         {
             instance = this;
-        }else if(instance != this)
+        }
+        else if (instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -27,13 +28,13 @@ public class DailyRewardManager : MonoBehaviour
     #endregion
     public const string BaseURL = "https://sdev.wadzzo.com";
     public const string requestName = "/api/v1/points";
-    
+
     private string tokken;
     private int dailyRewardPoint;
     private void Start()
     {
         //once the application process get finalized then uncomment 
-         tokken = AuthManager.Token;
+        tokken = AuthManager.Token;
     }
     public void DailyReward(int dailyRewardPoint)
     {
@@ -73,7 +74,7 @@ public class DailyRewardManager : MonoBehaviour
             {
                 LoadingManager.instance.loading.SetActive(false);
                 Debug.Log("Coins Happened successfully");
-                CoinsManager.Instance.UpdateCoinsCount();
+                // CoinsManager.Instance.UpdateCoinsCount();
             }
         }
     }

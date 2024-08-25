@@ -7,6 +7,6 @@ public class CoinsPanel : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("coins count update call from panel activation");
-        CoinsManager.Instance.UpdateCoinsCount();
+        // CoinsManager.Instance.UpdateCoinsCount();
     }
 }
