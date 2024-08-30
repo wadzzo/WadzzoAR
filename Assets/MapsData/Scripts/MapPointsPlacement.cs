@@ -7,12 +7,13 @@ using Mapbox.Unity.Utilities;
 using Mapbox.Utils;
 using UnityEngine;
 
-public class MapPointsPlacement : MonoBehaviour {
+public class MapPointsPlacement : MonoBehaviour
+{
 
     [SerializeField]
     [Geocode]
     string[] _TrackPartsLatitudeLongitude;
-   
+
 
     public Vector2d[] _locations;
     [SerializeField]
@@ -22,9 +23,10 @@ public class MapPointsPlacement : MonoBehaviour {
     Vector2d[] _coordinates;
     bool instatiatedmap = false;
     public GameObject CheckpointIndicator;
-    
+    public GameObject CheckpointIndicatorSqure;
+
     public int animalindexGatterPref;
-    public GameObject [] animalindexList;
+    public GameObject[] animalindexList;
 
     public static MapPointsPlacement instance;
 
@@ -36,7 +38,7 @@ public class MapPointsPlacement : MonoBehaviour {
 
         animalindexGatterPref = PlayerPrefs.GetInt("AnimationManager.instance.animalindex");
         Debug.Log(animalindexGatterPref + " Model Visited");
-//        animalindexList[animalindexGatterPref].SetActive(true);
+        //        animalindexList[animalindexGatterPref].SetActive(true);
 
     }
     public void Awake()
@@ -49,7 +51,7 @@ public class MapPointsPlacement : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-       
+
     }
     public void PlacePoints(string[] locationsData)
     {
@@ -66,9 +68,25 @@ public class MapPointsPlacement : MonoBehaviour {
 
                 _locations[count] = Conversions.StringToLatLon(locationsData[i]);
 
-                var mapPoint = Instantiate(CheckpointIndicator);
+                var pinDataUser = LocationDataManager.instance.users[i];
+
+
+                // var mapPoint = pinDataUser.auto_collect ? Instantiate(CheckpointIndicatorSqure) : Instantiate(CheckpointIndicator);
+                GameObject mapPoint;
+                // Debug.Log($"Pin {i}: auto_collect = {pinDataUser.auto_collect} {pinDataUser.lat} {pinDataUser.lng}");
+                if (pinDataUser.auto_collect)
+                {
+                    mapPoint = Instantiate(CheckpointIndicatorSqure);
+
+                }
+                else
+                {
+                    mapPoint = Instantiate(CheckpointIndicator);
+
+                }
+
                 mapPoint.transform.position = _map.GeoToWorldPosition(_locations[count], false);
-                mapPoint.GetComponentInChildren<MapItem>().user = LocationDataManager.instance.users[i];
+                mapPoint.GetComponentInChildren<MapItem>().user = pinDataUser;
                 mapPoint.GetComponentInChildren<MapItem>().LoadBrandTexture();
 
 
@@ -89,7 +107,7 @@ public class MapPointsPlacement : MonoBehaviour {
             Bugsnag.Notify(new System.InvalidOperationException("MapPointsPlacement PlacePoints()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
 
     }
 
@@ -116,7 +134,7 @@ public class MapPointsPlacement : MonoBehaviour {
             Bugsnag.Notify(new System.InvalidOperationException("MapPointsPlacement LateUpdate()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
 
 

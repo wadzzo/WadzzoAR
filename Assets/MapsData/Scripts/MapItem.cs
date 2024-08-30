@@ -37,11 +37,11 @@ public class MapItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("MapItem Init()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
     public void LoadBrandTexture()
     {
-        Debug.Log("user.brand_id and URL " + user.brand_id + ", " + user.brand_image_url);
+        // Debug.Log("user.brand_id and URL " + user.brand_id + ", " + user.brand_image_url);
         localURL = string.Format("{0}/{1}.jpg", Application.persistentDataPath, "" + user.brand_id);
 
         if (File.Exists(localURL))
@@ -56,7 +56,7 @@ public class MapItem : MonoBehaviour
                 Bugsnag.Notify(new System.InvalidOperationException("MapItem LoadBrandTexture()"));
                 Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
             }
-            
+
         }
         else
         {
@@ -72,7 +72,7 @@ public class MapItem : MonoBehaviour
                     Bugsnag.Notify(new System.InvalidOperationException("MapItem GetBrandThumbnail()"));
                     Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
                 }
-                
+
             }
             else
             {
@@ -87,22 +87,23 @@ public class MapItem : MonoBehaviour
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
 
-        if(user.collected){
+        if (user.collected)
+        {
             texture = ConvertToGrayscale(texture);
         }
 
         Sprite thumbnail = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         BrandTexture = thumbnail.texture;
-       
-        Renderer renderer =  GetComponent<Renderer>();
+
+        Renderer renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = BrandTexture;
 
-        if(user.collected)
+        if (user.collected)
         {
             // YelloLineEnable();
         }
 
-        
+
     }
     Texture2D ConvertToGrayscale(Texture2D originalTexture)
     {
@@ -121,8 +122,9 @@ public class MapItem : MonoBehaviour
         grayscaleTexture.Apply();
         return grayscaleTexture;
     }
-    
-    void YelloLineEnable() {
+
+    void YelloLineEnable()
+    {
         Transform nameBgTransform = transform.Find("CollectedLine");
         if (nameBgTransform != null)
         {
@@ -196,7 +198,7 @@ public class MapItem : MonoBehaviour
 
         // Create a new Sprite with the modified texture
         Sprite newSprite = Sprite.Create(textureCopy, new Rect(0.0f, 0.0f, textureCopy.width, textureCopy.height), new Vector2(0.5f, 0.5f));
-        
+
         // Apply the new Sprite to your game object
         GetComponent<SpriteRenderer>().sprite = newSprite;
     }
@@ -238,7 +240,7 @@ public class MapItem : MonoBehaviour
     }
     private IEnumerator GetThumbnail(string uri)
     {
-        Debug.Log("uriiii" + uri);
+        // Debug.Log("uriiii" + uri);
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
         try
         {
@@ -250,7 +252,7 @@ public class MapItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("MapItem GetThumbnail()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
         www.SetRequestHeader("Content-type", "application/json");
         yield return www.SendWebRequest();
 
@@ -286,7 +288,7 @@ public class MapItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("MapItem Start()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
 
     void OnMouseDown()
@@ -304,16 +306,16 @@ public class MapItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("MapItem OnMouseDown()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
 
-  
+
     private IEnumerator WaitForResponse(UnityWebRequest request)
     {
         while (!request.isDone)
         {
             //ButtonsUIManager.instance.ModelProgressText.text = "Downloading " + (request.downloadProgress * 100).ToString("F0") + "%";
-           // Debug.Log("Loading " + (request.downloadProgress * 100).ToString("F0") + "%");
+            // Debug.Log("Loading " + (request.downloadProgress * 100).ToString("F0") + "%");
             yield return null;
         }
     }

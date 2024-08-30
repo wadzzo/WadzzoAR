@@ -4981,7 +4981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 6.5185547, y: -152.4125}
+  m_AnchoredPosition: {x: 6.518524, y: -152.4125}
   m_SizeDelta: {x: 13.0275, y: 304.8248}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &170376549
@@ -52109,6 +52109,7 @@ MonoBehaviour:
   _map: {fileID: 468231557}
   _spawnScale: 1
   CheckpointIndicator: {fileID: 6896169571310997346, guid: 60eefdeae616a9e44ae5479d586fed84, type: 3}
+  CheckpointIndicatorSqure: {fileID: 6896169571310997346, guid: 8ac654b878dc45a4aa2694f98d328044, type: 3}
   animalindexGatterPref: 0
   animalindexList: []
 --- !u!1 &1997047023

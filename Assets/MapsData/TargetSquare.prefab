@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 596613431553209429}
   - component: {fileID: 2277717031126016828}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +339,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6024590061949544861}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2322626668681910747
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &2277717031126016828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2394010538638303442}
   m_Layer: 0
-  m_Name: Target
+  m_Name: TargetSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
