@@ -124,6 +124,7 @@ public class CoinsManager : MonoBehaviour
     #region APIRequest
     public void UpdateCoinsCount()
     {
+        return;
         string BaseURL = AuthManager.BASE_URL;
         //string requestName = "/api/v1/points/points_count";
         string requestName = "/api/v1/users/waddzo_available_tokens";

@@ -13,7 +13,7 @@ public class UsersFromLocation : MonoBehaviour
 
     public static UsersFromLocation instance;
     public static AllLocationRot allLocationRot;
-    public   Image tutorialOverlay;
+    public Image tutorialOverlay;
 
 
 
@@ -53,11 +53,11 @@ public class UsersFromLocation : MonoBehaviour
     public void GetUserByLocations()
     {
 
-        if (tutorialOverlay.IsActive())
-        {
-            Debug.Log("Tutorial Overlay is active");
-            return;
-        }
+        // if (tutorialOverlay.IsActive())
+        // {
+        //     Debug.Log("Tutorial Overlay is active");
+        //     return;
+        // }
 
         Debug.Log("Always call this API");
         LoadingManager.instance.loading.SetActive(true);
@@ -117,9 +117,9 @@ public class UsersFromLocation : MonoBehaviour
     IEnumerator GetLocations()
     {
         string requestName = "api/v1/locations?lat=" + Input.location.lastData.latitude.ToString() + "&lng=" + Input.location.lastData.longitude.ToString();
-        #if (UNITY_EDITOR)
+#if (UNITY_EDITOR)
                             requestName = "api/v1/locations?lat=31.506239&lng=74.322964";
-        #endif
+#endif
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + requestName))
         {
             www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
