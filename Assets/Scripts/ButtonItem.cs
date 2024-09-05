@@ -21,10 +21,10 @@ public class ButtonItem : MonoBehaviour
     public Text billborad_BrandName;
     LocationRoot FetchedLocations;
 
-    public  int itemNumber;
+    public int itemNumber;
     public int j;
     //public GameObject ASC;
-   
+
     public string RedeemUrl;
     public string localURL;
 
@@ -45,7 +45,7 @@ public class ButtonItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("ButtonItem init()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
 
     private void Start()
@@ -72,7 +72,7 @@ public class ButtonItem : MonoBehaviour
             Bugsnag.Notify(new System.InvalidOperationException("ButtonItem Start()"));
             Bugsnag.Notify(new System.InvalidOperationException("ex.Message" + ex.Message));
         }
-        
+
     }
 
     //private IEnumerator GetThumbnail(string uri)
@@ -115,10 +115,10 @@ public class ButtonItem : MonoBehaviour
         BillBoardsAPICount.instance.descrition_txt.text = Button_user.description;
         BillBoardsAPICount.instance.consumption_date.text = Button_user.consumption_date;
         BillBoardsAPICount.instance.ConsumedURl = Button_user.url;
-       // BillBoardsAPICount.instance.RemainingLimit.text = " "+ Button_user.collection_limit_remaining + " Limit Remaining";
+        // BillBoardsAPICount.instance.RemainingLimit.text = " "+ Button_user.collection_limit_remaining + " Limit Remaining";
         BillBoardsAPICount.instance.billborad_BrandName.text = Button_user.brand_name;
         limit = Button_user.collection_limit_remaining;
-      
+
         if (limit == "Limit Reached")
         {
             BillBoardsAPICount.instance.RemainingLimit.text = "  Limit Reached";
@@ -201,7 +201,7 @@ public class ButtonItem : MonoBehaviour
         }
         else if (File.Exists(path))
         {
-           //SceneManager.LoadScene(5);
+            //SceneManager.LoadScene(5);
         }
         else if (Button_user.modal_url == "" || Button_user.modal_url == null)
         {
@@ -239,12 +239,12 @@ public class ButtonItem : MonoBehaviour
     {
         while (!request.isDone)
         {
-//            ButtonsUIManager.instance.ModelProgressText.text = "Downloading " + (request.downloadProgress * 100).ToString("F0") + "%";
+            //            ButtonsUIManager.instance.ModelProgressText.text = "Downloading " + (request.downloadProgress * 100).ToString("F0") + "%";
             Debug.Log("Loading " + (request.downloadProgress * 100).ToString("F0") + "%");
             yield return null;
         }
     }
-   
+
     public void DeleteBillboard()
     {
         LoadingManager.instance.loading.SetActive(true);
@@ -265,7 +265,7 @@ public class ButtonItem : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(AuthManager.BASE_URL + requestName, form))
         {
 
-            www.SetRequestHeader("Cookie",  AuthManager.Token);
+            www.SetRequestHeader("Cookie", AuthManager.Token);
 
             yield return www.SendWebRequest();
             ConsumeLocation Result1 = JsonUtility.FromJson<ConsumeLocation>(www.downloadHandler.text);
@@ -290,7 +290,7 @@ public class ButtonItem : MonoBehaviour
 
     public void ViewCheck()
     {
-  
+
         //LoadingManager.instance.loading.SetActive(true);
         StartCoroutine(PostViewCheck(Button_user.id));
 

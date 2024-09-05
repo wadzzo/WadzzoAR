@@ -1,4 +1,4 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +16,7 @@ public class BillBoardsAPICount : MonoBehaviour
     public Text RemainingLimit;
     public static int totalCount;
     public Text billborad_BrandName;
-    int j=0;
+    int j = 0;
 
     public Image imagePreview;
 
@@ -26,7 +26,7 @@ public class BillBoardsAPICount : MonoBehaviour
     [HideInInspector]
     public Sprite ImageForAR;
     public bool isBrandImageAvailable = false;
-    
+
     public Image ImagePopUp;
     public GameObject ImagePopUpPanel;
     public Text description_title;
@@ -37,7 +37,7 @@ public class BillBoardsAPICount : MonoBehaviour
 
 
 
-  
+
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class BillBoardsAPICount : MonoBehaviour
         }
 
     }
-    
+
     void Start()
     {
 
@@ -61,7 +61,7 @@ public class BillBoardsAPICount : MonoBehaviour
 
     }
 
-   
+
     public IEnumerator GetConsumedLocations()
     {
         using (UnityWebRequest www = UnityWebRequest.Get(AuthManager.BASE_URL + requestName))
@@ -69,42 +69,43 @@ public class BillBoardsAPICount : MonoBehaviour
             LoadingManager.instance.loading.SetActive(true);
 
             // www.SetRequestHeader("Authorization", "Bearer " + AuthManager.Token);
-            www.SetRequestHeader("Cookie",  AuthManager.Token);
-                yield return www.SendWebRequest();
-                if (www.isNetworkError || www.isHttpError)
-                {
-                    ConsoleManager.instance.ShowMessage("Network Error!");
-         
-                    LoadingManager.instance.loading.SetActive(false);
-                }
-                else
-                {
+            www.SetRequestHeader("Cookie", AuthManager.Token);
+            yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                ConsoleManager.instance.ShowMessage("Network Error!");
 
-                    LoadingManager.instance.loading.SetActive(false);
-                    Debug.Log(www.downloadHandler.text);
-
-                    LocationRoot FetchedLocations = JsonUtility.FromJson<LocationRoot>(www.downloadHandler.text);
-
-                    foreach (var item in FetchedLocations.locations)
-                    {
-
-                        //Debug.Log("title " + item.title);
-                        //Debug.Log("Description " + item.description);
-                        //Debug.Log("brand_name " + item.brand_name);
-                    }
-
-                    fetched_Locations = FetchedLocations;
-                    totalCount = fetched_Locations.locations.Count;
-                // itemCollectedForMapScene.text = "Total " + FetchedLocations.locations.Count.ToString();
-    
+                LoadingManager.instance.loading.SetActive(false);
             }
+            else
+            {
+
+                LoadingManager.instance.loading.SetActive(false);
+                Debug.Log(www.downloadHandler.text);
+
+                LocationRoot FetchedLocations = JsonUtility.FromJson<LocationRoot>(www.downloadHandler.text);
+
+                foreach (var item in FetchedLocations.locations)
+                {
+
+                    //Debug.Log("title " + item.title);
+                    //Debug.Log("Description " + item.description);
+                    //Debug.Log("brand_name " + item.brand_name);
+                }
+
+                fetched_Locations = FetchedLocations;
+                totalCount = fetched_Locations.locations.Count;
+                // itemCollectedForMapScene.text = "Total " + FetchedLocations.locations.Count.ToString();
+
             }
         }
+    }
 
 
     public void Redeem()
     {
-        Application.OpenURL(ConsumedURl);
+        string claimUrl = AuthManager.BASE_URL + "/maps/pins/my";
+        Application.OpenURL(claimUrl);
     }
 
     public void ForwardBtn()

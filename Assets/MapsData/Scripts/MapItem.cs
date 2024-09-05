@@ -114,7 +114,7 @@ public class MapItem : MonoBehaviour
         {
             Color originalColor = originalColors[i];
             float grayScale = (originalColor.r + originalColor.g + originalColor.b) / 3f;
-            grayscaleColors[i] = new Color(grayScale, grayScale, grayScale, originalColor.a);
+            grayscaleColors[i] = new Color(grayScale, grayScale, grayScale, 0.7f);
         }
 
         Texture2D grayscaleTexture = new Texture2D(originalTexture.width, originalTexture.height);
