@@ -21,6 +21,7 @@ public class ButtonItem : MonoBehaviour
     public Text billborad_BrandName;
     LocationRoot FetchedLocations;
 
+
     public int itemNumber;
     public int j;
     //public GameObject ASC;
@@ -112,9 +113,10 @@ public class ButtonItem : MonoBehaviour
         //Image forPreview = BillBoardsAPICount.instance.ImagePopUp.sprite;
         BillBoardsAPICount.instance.ImagePopUpPanel.SetActive(true);
         BillBoardsAPICount.instance.description_title.text = Button_user.title;
-        BillBoardsAPICount.instance.descrition_txt.text = Button_user.description;
         BillBoardsAPICount.instance.consumption_date.text = Button_user.consumption_date;
-        BillBoardsAPICount.instance.ConsumedURl = Button_user.url;
+        BillBoardsAPICount.instance.descrition_txt.text = Button_user.description;
+        BillBoardsAPICount.instance.ConsumedURl.text = Button_user.url;
+        // UpdateTextPositions();
         // BillBoardsAPICount.instance.RemainingLimit.text = " "+ Button_user.collection_limit_remaining + " Limit Remaining";
         BillBoardsAPICount.instance.billborad_BrandName.text = Button_user.brand_name;
         limit = Button_user.collection_limit_remaining;
@@ -133,6 +135,30 @@ public class ButtonItem : MonoBehaviour
 
         ViewCheck();
     }
+
+    // public void UpdateTextPositions()
+    // {
+    //     // Set the description text
+    //     BillBoardsAPICount.instance.descrition_txt.text = Button_user.description;
+
+    //     // Get the RectTransform of the description text
+    //     RectTransform descriptionRect = BillBoardsAPICount.instance.descrition_txt.GetComponent<RectTransform>();
+
+    //     // Force the Canvas to update so we get the correct size
+    //     Canvas.ForceUpdateCanvases();
+
+    //     // Get the height of the description text
+    //     float descriptionHeight = descriptionRect.rect.height;
+
+    //     // Get the RectTransform of the ConsumedURl text
+    //     RectTransform consumedUrlRect = BillBoardsAPICount.instance.ConsumedURl.GetComponent<RectTransform>();
+
+    //     // Set the position of the ConsumedURl text based on the y position and height of the description text
+    //     consumedUrlRect.anchoredPosition = new Vector2(consumedUrlRect.anchoredPosition.x, descriptionRect.anchoredPosition.y - descriptionHeight - 10); // Adjust the -10 value as needed for spacing
+
+    //     // Set the ConsumedURl text
+    //     BillBoardsAPICount.instance.ConsumedURl.text = Button_user.url;
+    // }
     public void ShowImageInAR()
     {
         BillBoardsAPICount.instance.ImageForAR = serverImage.sprite;

@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class LinkUIManager : MonoBehaviour
 {
-    
+
     public static LinkUIManager instance;
     void Start()
     {
-        
+
     }
     private void Awake()
     {
@@ -28,10 +28,10 @@ public class LinkUIManager : MonoBehaviour
     {
         Application.OpenURL(Url);
     }
-    
+
     public void RefreshScene(int SceneNumber)
     {
-        CanCollectAgain();
+        // CanCollectAgain();
         StartCoroutine(LoadAsyncScene(SceneNumber));
     }
     IEnumerator LoadAsyncScene(int SceneNumber)
@@ -46,7 +46,7 @@ public class LinkUIManager : MonoBehaviour
     {
         SceneManager.LoadScene(getScene);
     }
-   
+
     public void CanCollectAgain()
     {
         Invoke(nameof(CanCollect), 5);

@@ -192,6 +192,10 @@ public class TutorialSearch : MonoBehaviour
 
     public void EndTutorial()
     {
+
+        PlayerPrefs.SetInt("SearchTutorial", 1);
+        PlayerPrefs.Save(); // Ensure the change is saved immediately
+
         overlay.gameObject.SetActive(false);
         parent.gameObject.SetActive(false);
     }

@@ -37,7 +37,7 @@ public class MenuManager : MonoBehaviour
 
 
     {
-        
+
 
         foreach (Button button in menuButtons)
         {
@@ -81,5 +81,7 @@ public class MenuManager : MonoBehaviour
     {
         Application.OpenURL(URL);
     }
+
+
 }
 

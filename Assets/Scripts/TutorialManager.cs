@@ -161,7 +161,8 @@ public class TutorialManager : MonoBehaviour
 
         else if (currentStep == tutorialSteps.Count - 1)
         {
-            EndTutorial();
+            Debug.Log("Tutorial Finished");
+            SkipTutorial();
         }
 
     }
@@ -273,6 +274,9 @@ public class TutorialManager : MonoBehaviour
 
     public void EndTutorial()
     {
+        PlayerPrefs.SetInt("TutorialSkipped", 1);
+        PlayerPrefs.Save();
+
         overlay.gameObject.SetActive(false);
         homeOverlay.gameObject.SetActive(false);
     }

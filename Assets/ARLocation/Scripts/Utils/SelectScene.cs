@@ -12,5 +12,11 @@ namespace ARLocation.Utils
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
+
+        public void LogCurrentScene()
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            Debug.Log("Current active scene: " + currentScene.name);
+        }
     }
 }

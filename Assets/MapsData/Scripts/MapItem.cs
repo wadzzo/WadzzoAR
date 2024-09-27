@@ -7,6 +7,7 @@ using Mapbox.Unity.Location;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MapItem : MonoBehaviour
 {
@@ -293,6 +294,7 @@ public class MapItem : MonoBehaviour
 
     void OnMouseDown()
     {
+
         try
         {
             MapItemInfoPopUp.instance.OpenPanel(user.description, user.title, serverImage.sprite, user.collection_limit_remaining.ToString(), user.brand_name);

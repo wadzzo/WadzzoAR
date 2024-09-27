@@ -32,7 +32,7 @@ public class BillBoardsAPICount : MonoBehaviour
     public Text description_title;
     public Text descrition_txt;
     public Text consumption_date;
-    public string ConsumedURl;
+    public Text ConsumedURl;
 
 
 
@@ -99,6 +99,13 @@ public class BillBoardsAPICount : MonoBehaviour
 
             }
         }
+    }
+
+
+    public void OpenURL()
+    {
+        string url = ConsumedURl.text;
+        Application.OpenURL(url);
     }
 
 

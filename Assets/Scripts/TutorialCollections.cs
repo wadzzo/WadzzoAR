@@ -184,6 +184,9 @@ public class TutorialCollections : MonoBehaviour
 
     public void EndTutorial()
     {
+        PlayerPrefs.SetInt("CollectionTutorial", 1);
+        PlayerPrefs.Save();
+
         overlay.gameObject.SetActive(false);
         parent.gameObject.SetActive(false);
     }
